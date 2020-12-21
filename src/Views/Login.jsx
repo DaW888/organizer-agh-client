@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as api from '../api/apis';
+import { FormWrapper, LoginContainer } from '../Styled/Sites/Login';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -27,8 +28,8 @@ const Login = () => {
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmitLogin}>
+        <LoginContainer>
+            <FormWrapper onSubmit={handleSubmitLogin}>
                 <input
                     type="text"
                     value={email}
@@ -40,7 +41,7 @@ const Login = () => {
                     onChange={e => setPass(e.target.value)}
                 />
                 <input type="submit" value="submit" />
-            </form>
+            </FormWrapper>
             <div>
                 <button onClick={() => getFoods()}>GET DATAS</button>
                 <ul>
@@ -50,7 +51,7 @@ const Login = () => {
                 </ul>
             </div>
             <div>{fetchError}</div>
-        </>
+        </LoginContainer>
     );
 };
 
