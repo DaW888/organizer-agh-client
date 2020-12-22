@@ -18,3 +18,8 @@ export const login = async userData => {
     const { data } = await axios.post(`/api/login`, userData);
     return data;
 };
+
+export const register = async userData => {
+    const { data } = await axios.post(`/api/register`, userData);
+    return data;
+};

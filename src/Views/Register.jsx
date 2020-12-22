@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { FormWrapper, RegisterContainer } from '../Styled/Sites/Register';
+import * as api from '../api/apis';
+import { ErrorMessageWrapper } from '../Styled/Global/Errors';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmitRegister = e => {
+    const handleSubmitRegister = async e => {
         e.preventDefault();
+        try {
+            const data = await api.register({ email, pass, name, surname });
+            console.log(data);
+        } catch (err) {
+            console.log(err.response.status);
+            if (err.response.status === 409) {
+                console.log('taki user już istnieje');
+                setError('taki user już istnieje');
+            }
+        }
     };
 
     return (
@@ -44,6 +57,7 @@ const Register = () => {
                 />
                 <input type="submit" value="Register" />
             </FormWrapper>
+            <ErrorMessageWrapper>{error}</ErrorMessageWrapper>
         </RegisterContainer>
     );
 };
