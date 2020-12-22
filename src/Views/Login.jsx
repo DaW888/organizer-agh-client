@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as api from '../api/apis';
 import { FormWrapper, LoginContainer } from '../Styled/Sites/Login';
 import { Link, useHistory } from 'react-router-dom';
@@ -25,19 +25,20 @@ const Login = () => {
         }
     };
 
-    const [foods, setFoods] = useState([]);
-    const [fetchError, setFetchError] = useState(null);
-
-    const getFoods = async () => {
-        try {
-            const data = await api.getFoods();
-            console.log(data);
-            setFoods(data);
-            setFetchError(null);
-        } catch (err) {
-            setFetchError(err.message);
-        }
-    };
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await api.validateToken();
+                console.log(data);
+                if (data.message === 'valid') {
+                    actionsStore.login(data.user);
+                    history.push('/');
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
 
     return (
         <LoginContainer>
@@ -54,15 +55,6 @@ const Login = () => {
                 />
                 <input type="submit" value="Zaloguj" />
             </FormWrapper>
-            <div>
-                <button onClick={() => getFoods()}>GET DATAS</button>
-                <ul>
-                    {foods.map((dat, i) => (
-                        <li key={i}>{dat.description}</li>
-                    ))}
-                </ul>
-            </div>
-            <div>{fetchError}</div>
             <Link to="/register">Zarejestruj</Link>
         </LoginContainer>
     );

@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormWrapper, RegisterContainer } from '../Styled/Sites/Register';
 import * as api from '../api/apis';
 import { ErrorMessageWrapper } from '../Styled/Global/Errors';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useStore } from '../SweetState/store';
 
 const Register = () => {
+    const history = useHistory();
+
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [error, setError] = useState('');
+
+    const [, actionsStore] = useStore();
 
     const handleSubmitRegister = async e => {
         e.preventDefault();
@@ -24,6 +29,21 @@ const Register = () => {
             }
         }
     };
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await api.validateToken();
+                console.log(data);
+                if (data.message === 'valid') {
+                    actionsStore.login(data.user);
+                    history.push('/');
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
 
     return (
         <RegisterContainer>

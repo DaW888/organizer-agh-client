@@ -1,14 +1,5 @@
 import axios from 'axios';
 
-axios.interceptors.request.use(
-    config => {
-        return config;
-    },
-    error => {
-        return Promise.reject(error);
-    }
-);
-
 export const getFoods = async () => {
     const { data } = await axios.get(`/api/foods`);
     return data;
@@ -22,4 +13,17 @@ export const login = async userData => {
 export const register = async userData => {
     const { data } = await axios.post(`/api/register`, userData);
     return data;
+};
+
+export const validateToken = async () => {
+    const { data } = await axios.get('/api/validateToken');
+    return data;
+};
+
+export const removeToken = async () => {
+    try {
+        await axios.get('/api/removeToken');
+    } catch (err) {
+        console.log(err);
+    }
 };

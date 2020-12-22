@@ -1,4 +1,5 @@
 import { createStore, createHook } from 'react-sweet-state';
+import * as api from '../api/apis';
 
 const actions = {
     login: data => ({ setState }) => {
@@ -11,7 +12,8 @@ const actions = {
             },
         });
     },
-    logout: () => ({ setState }) => {
+    logout: () => async ({ setState }) => {
+        await api.removeToken();
         setState({
             user: null,
         });
