@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import * as api from '../api/apis';
 import { FormWrapper, LoginContainer } from '../Styled/Sites/Login';
+import { Link, useHistory } from 'react-router-dom';
+import { useStore } from '../SweetState/store';
 
 const Login = () => {
+    const history = useHistory();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+
+    const [, actionsStore] = useStore();
 
     const handleSubmitLogin = async e => {
         e.preventDefault();
         console.log(email, pass);
-        const res = await api.login({ email, pass });
-        console.log(res);
+        try {
+            const res = await api.login({ email, pass });
+            actionsStore.login(res.data);
+            history.push('/');
+            console.log(res);
+        } catch (err) {
+            actionsStore.logout();
+            console.log(err);
+        }
     };
 
     const [foods, setFoods] = useState([]);
@@ -31,16 +43,16 @@ const Login = () => {
         <LoginContainer>
             <FormWrapper onSubmit={handleSubmitLogin}>
                 <input
-                    type="text"
+                    type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
                 <input
-                    type="text"
+                    type="password"
                     value={pass}
                     onChange={e => setPass(e.target.value)}
                 />
-                <input type="submit" value="submit" />
+                <input type="submit" value="Zaloguj" />
             </FormWrapper>
             <div>
                 <button onClick={() => getFoods()}>GET DATAS</button>
@@ -51,6 +63,7 @@ const Login = () => {
                 </ul>
             </div>
             <div>{fetchError}</div>
+            <Link to="/register">Zarejestruj</Link>
         </LoginContainer>
     );
 };

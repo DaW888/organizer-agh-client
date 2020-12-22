@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormWrapper, RegisterContainer } from '../Styled/Sites/Register';
 import * as api from '../api/apis';
 import { ErrorMessageWrapper } from '../Styled/Global/Errors';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -58,6 +59,7 @@ const Register = () => {
                 <input type="submit" value="Register" />
             </FormWrapper>
             <ErrorMessageWrapper>{error}</ErrorMessageWrapper>
+            <Link to="/login">Zaloguj</Link>
         </RegisterContainer>
     );
 };
