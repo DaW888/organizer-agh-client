@@ -8,10 +8,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AuthenticatedRoute from './Routes/PrivateRoutes/AuthenticatedRoute';
 import axios from 'axios';
 import { useStore } from './SweetState/store';
+import { ThemeProvider } from 'styled-components';
+import { light, dark } from './CONSTS/THEMES';
 
 const App = () => {
     // sweet state
-    const [, actionsStore] = useStore();
+    const [stateStore, actionsStore] = useStore();
 
     // axios interceptors
     axios.interceptors.request.use(
@@ -37,22 +39,24 @@ const App = () => {
     );
 
     return (
-        <>
-            <GlobalStyles />
-            <Router>
-                <Switch>
-                    <Route path="/register">
-                        <Register />
-                    </Route>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <AuthenticatedRoute path="/">
-                        <Main />
-                    </AuthenticatedRoute>
-                </Switch>
-            </Router>
-        </>
+        <ThemeProvider theme={stateStore.isLightTheme ? light : dark}>
+            <>
+                <GlobalStyles />
+                <Router>
+                    <Switch>
+                        <Route path="/register">
+                            <Register />
+                        </Route>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <AuthenticatedRoute path="/">
+                            <Main />
+                        </AuthenticatedRoute>
+                    </Switch>
+                </Router>
+            </>
+        </ThemeProvider>
     );
 };
 

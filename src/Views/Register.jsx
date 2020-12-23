@@ -20,6 +20,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const data = await api.register({ email, pass, name, surname });
+            history.push('/login');
             console.log(data);
         } catch (err) {
             console.log(err.response.status);

@@ -2,6 +2,12 @@ import { createStore, createHook } from 'react-sweet-state';
 import * as api from '../api/apis';
 
 const actions = {
+    changeTheme: () => ({ setState, getState }) => {
+        setState({
+            isLightTheme: !getState().isLightTheme,
+        });
+    },
+
     login: data => ({ setState }) => {
         setState({
             user: {
@@ -12,6 +18,7 @@ const actions = {
             },
         });
     },
+
     logout: () => async ({ setState }) => {
         await api.removeToken();
         setState({
@@ -23,6 +30,7 @@ const actions = {
 const Store = createStore({
     initialState: {
         user: null,
+        isLightTheme: true,
     },
     actions,
     name: 'store',
