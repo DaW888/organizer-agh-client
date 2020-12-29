@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../api/apis';
-import { FormWrapper, LoginContainer } from '../Styled/Sites/Login';
-import { Link, useHistory } from 'react-router-dom';
+import {
+    AghHeader,
+    FormWrapper,
+    Illustration,
+    InputButton,
+    InputText,
+    LoginContainer,
+    Main,
+    StyledLink,
+    Title,
+} from '../Styled/Sites/Login';
+import { useHistory } from 'react-router-dom';
 import { useStore } from '../SweetState/store';
+
+import projectIllustration from '../assets/illustrations/projectIllustration.svg';
 
 const Login = () => {
     const history = useHistory();
@@ -39,23 +51,32 @@ const Login = () => {
             }
         })();
     }, []);
-
     return (
         <LoginContainer>
-            <FormWrapper onSubmit={handleSubmitLogin}>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+            <AghHeader>AGH Organizer</AghHeader>
+            <Title>All your events in one place</Title>
+            <Main>
+                <Illustration
+                    src={projectIllustration}
+                    alt="projectIllustration"
                 />
-                <input
-                    type="password"
-                    value={pass}
-                    onChange={e => setPass(e.target.value)}
-                />
-                <input type="submit" value="Zaloguj" />
-            </FormWrapper>
-            <Link to="/register">Zarejestruj</Link>
+                <FormWrapper onSubmit={handleSubmitLogin}>
+                    <InputText
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    <InputText
+                        placeholder="Password"
+                        type="password"
+                        value={pass}
+                        onChange={e => setPass(e.target.value)}
+                    />
+                    <InputButton type="submit" value="Login" />
+                    <StyledLink to="/register">Register</StyledLink>
+                </FormWrapper>
+            </Main>
         </LoginContainer>
     );
 };

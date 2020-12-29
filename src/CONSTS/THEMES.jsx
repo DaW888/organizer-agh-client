@@ -1,11 +1,19 @@
-export const dark = {
-    bgMainColor: '#181818',
-    textColor: '#0455ac',
+const same = {
     transition: 'background-color 0.75s linear, color 0.75s linear',
 };
 
+export const dark = {
+    ...same,
+    bgMainColor: '#181818',
+    textColor: '#0455ac',
+    textSoftColor: '#505359',
+    accentOrange: '#FE7F7F',
+};
+
 export const light = {
-    bgMainColor: '#d9d9d9',
-    textColor: '#bf0909',
-    transition: 'background-color 0.75s linear, color 0.75s linear',
+    ...same,
+    bgMainColor: '#EAEEF6',
+    textColor: '#373F4C',
+    textSoftColor: '#505359',
+    accentOrange: '#FE7F7F',
 };
