@@ -6,12 +6,19 @@ const Button = styled.button`
     transition: ${({ theme }) => theme.transition};
     width: 30px;
     height: 30px;
-    border: 2px solid #fafa9c;
+    border: 2px solid #929292;
     background-color: ${({ theme }) => theme.textColor};
     border-radius: 20px;
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 20px;
+    top: 20px;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        right: 10px;
+        top: 10px;
+        width: 20px;
+        height: 20px;
+    }
 `;
 
 const ButtonTheme = () => {

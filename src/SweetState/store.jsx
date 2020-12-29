@@ -3,6 +3,10 @@ import * as api from '../api/apis';
 
 const actions = {
     changeTheme: () => ({ setState, getState }) => {
+        localStorage.setItem(
+            'isLight',
+            JSON.stringify(!getState().isLightTheme)
+        );
         setState({
             isLightTheme: !getState().isLightTheme,
         });
@@ -30,7 +34,7 @@ const actions = {
 const Store = createStore({
     initialState: {
         user: null,
-        isLightTheme: true,
+        isLightTheme: !!JSON.parse(localStorage.getItem('isLight')),
     },
     actions,
     name: 'store',

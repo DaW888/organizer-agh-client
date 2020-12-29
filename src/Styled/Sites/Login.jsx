@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const LoginContainer = styled.div`
+    transition: ${({ theme }) => theme.transition};
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -11,6 +12,7 @@ export const LoginContainer = styled.div`
 `;
 
 export const FormWrapper = styled.form`
+    transition: ${({ theme }) => theme.transition};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,13 +20,14 @@ export const FormWrapper = styled.form`
 `;
 
 export const AghHeader = styled.h3`
+    transition: ${({ theme }) => theme.transition};
     position: absolute;
-    font-size: 24px;
+    font-size: 22px;
     top: 0;
     left: 0;
     color: ${({ theme }) => theme.textColor};
     font-family: Proza Libre, sans-serif;
-    margin: 80px 0 0 100px;
+    margin: 40px 0 0 50px;
 
     @media (max-width: ${({ theme }) => theme.phoneSize}) {
         flex-direction: column;
@@ -34,6 +37,7 @@ export const AghHeader = styled.h3`
 `;
 
 export const Main = styled.main`
+    transition: ${({ theme }) => theme.transition};
     width: 100%;
     margin: 80px 100px 80px 100px;
     display: flex;
@@ -48,6 +52,7 @@ export const Main = styled.main`
 `;
 
 export const Title = styled.h1`
+    transition: ${({ theme }) => theme.transition};
     margin: 0;
     max-font-size: 60px;
     font-size: 4vw;
@@ -55,7 +60,7 @@ export const Title = styled.h1`
     font-family: Nunito, serif;
     font-weight: 300;
     @media (max-width: ${({ theme }) => theme.phoneSize}) {
-        width: 60%;
+        width: 80%;
         text-align: center;
         font-size: 8vw;
     }
@@ -72,6 +77,7 @@ export const Illustration = styled.img`
 `;
 
 export const InputText = styled.input`
+    transition: ${({ theme }) => theme.transition};
     font-family: Open Sans, serif;
     font-weight: 300;
     font-size: 26px;
@@ -83,7 +89,7 @@ export const InputText = styled.input`
     max-width: 450px;
     height: 6vh;
     width: 30vw;
-    box-shadow: inset 6px 6px 10px #d5d9e0, inset -6px -6px 10px #ffffff;
+    box-shadow: ${({ theme }) => theme.login.boxShadowInput};
     border-radius: 40px;
     padding: 0 22px 0 22px;
 
@@ -94,10 +100,11 @@ export const InputText = styled.input`
         width: 90vw;
         height: 10vh;
         font-size: 16px;
-        box-shadow: inset 3px 3px 5px #d5d9e0, inset -3px -3px 5px #ffffff;
+        box-shadow: ${({ theme }) => theme.login.boxShadowInputSmall};
     }
 `;
 export const InputButton = styled.input`
+    transition: ${({ theme }) => theme.transition};
     margin-top: 26px;
     font-family: Open Sans, serif;
     font-weight: 600;
@@ -109,7 +116,7 @@ export const InputButton = styled.input`
     max-height: 52px;
     width: 15vw;
     height: 6vh;
-    box-shadow: 6px 6px 10px #d5d9e0, -6px -6px 10px #ffffff;
+    box-shadow: ${({ theme }) => theme.login.boxShadowButton};
     border-radius: 60px;
     cursor: pointer;
 
@@ -120,7 +127,7 @@ export const InputButton = styled.input`
         width: 70vw;
         height: 10vh;
         font-size: 14px;
-        box-shadow: 3px 3px 5px #d5d9e0, -3px -3px 5px #ffffff;
+        box-shadow: ${({ theme }) => theme.login.boxShadowButtonSmall};
     }
 `;
 

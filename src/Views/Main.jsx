@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as api from '../api/apis';
 import { useStore } from '../SweetState/store';
-import ButtonTheme from '../Components/ButtonTheme';
 
 const Main = () => {
     const [, actionsStore] = useStore();
@@ -21,7 +20,6 @@ const Main = () => {
 
     return (
         <div>
-            <ButtonTheme />
             <button onClick={() => getFoods()}>GET DATAS</button>
             <ul>
                 {foods.map((dat, i) => (

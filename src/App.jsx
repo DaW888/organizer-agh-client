@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useStore } from './SweetState/store';
 import { ThemeProvider } from 'styled-components';
 import { light, dark } from './CONSTS/THEMES';
+import ButtonTheme from './Components/ButtonTheme';
 
 const App = () => {
     // sweet state
@@ -42,6 +43,7 @@ const App = () => {
         <ThemeProvider theme={stateStore.isLightTheme ? light : dark}>
             <>
                 <GlobalStyles />
+                <ButtonTheme />
                 <Router>
                     <Switch>
                         <Route path="/register">
