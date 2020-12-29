@@ -1,5 +1,6 @@
 const same = {
     transition: 'background-color 0.75s linear, color 0.75s linear',
+    phoneSize: '768px',
 };
 
 export const dark = {

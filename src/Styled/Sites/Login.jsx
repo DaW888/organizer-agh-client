@@ -25,6 +25,12 @@ export const AghHeader = styled.h3`
     color: ${({ theme }) => theme.textColor};
     font-family: Proza Libre, sans-serif;
     margin: 80px 0 0 100px;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        flex-direction: column;
+        margin: 15px 0 0 15px;
+        font-size: 14px;
+    }
 `;
 
 export const Main = styled.main`
@@ -32,6 +38,13 @@ export const Main = styled.main`
     margin: 80px 100px 80px 100px;
     display: flex;
     justify-content: space-evenly;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 25px 25px 25px 25px;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
 `;
 
 export const Title = styled.h1`
@@ -41,11 +54,21 @@ export const Title = styled.h1`
     color: ${({ theme }) => theme.textSoftColor};
     font-family: Nunito, serif;
     font-weight: 300;
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        width: 60%;
+        text-align: center;
+        font-size: 8vw;
+    }
 `;
 
 export const Illustration = styled.img`
     max-width: 800px;
     width: 40vw;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        width: 80vw;
+        margin-bottom: 48px;
+    }
 `;
 
 export const InputText = styled.input`
@@ -56,11 +79,23 @@ export const InputText = styled.input`
     color: ${({ theme }) => theme.textSoftColor};
     border: none;
     margin: 0 0 26px 0;
-    min-height: 64px;
-    min-width: 450px;
+    max-height: 64px;
+    max-width: 450px;
+    height: 6vh;
+    width: 30vw;
     box-shadow: inset 6px 6px 10px #d5d9e0, inset -6px -6px 10px #ffffff;
     border-radius: 40px;
     padding: 0 22px 0 22px;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 0 0 12px 0;
+        max-height: 42px;
+        max-width: 280px;
+        width: 90vw;
+        height: 10vh;
+        font-size: 16px;
+        box-shadow: inset 3px 3px 5px #d5d9e0, inset -3px -3px 5px #ffffff;
+    }
 `;
 export const InputButton = styled.input`
     margin-top: 26px;
@@ -70,11 +105,23 @@ export const InputButton = styled.input`
     color: ${({ theme }) => theme.textSoftColor};
     background-color: ${({ theme }) => theme.bgMainColor};
     border: none;
-    width: 225px;
-    height: 52px;
+    max-width: 225px;
+    max-height: 52px;
+    width: 15vw;
+    height: 6vh;
     box-shadow: 6px 6px 10px #d5d9e0, -6px -6px 10px #ffffff;
     border-radius: 60px;
     cursor: pointer;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin-top: 12px;
+        max-height: 36px;
+        max-width: 160px;
+        width: 70vw;
+        height: 10vh;
+        font-size: 14px;
+        box-shadow: 3px 3px 5px #d5d9e0, -3px -3px 5px #ffffff;
+    }
 `;
 
 export const StyledLink = styled(Link)`
@@ -85,4 +132,7 @@ export const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.accentOrange};
     font-size: 20px;
     text-decoration: none;
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        font-size: 14px;
+    }
 `;
