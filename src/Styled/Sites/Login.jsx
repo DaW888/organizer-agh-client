@@ -80,7 +80,7 @@ export const InputText = styled.input`
     transition: ${({ theme }) => theme.transition};
     font-family: Open Sans, serif;
     font-weight: 300;
-    font-size: 26px;
+    font-size: 24px;
     background-color: ${({ theme }) => theme.bgMainColor};
     color: ${({ theme }) => theme.textSoftColor};
     border: none;

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+
 import * as api from '../api/apis';
 import { useStore } from '../SweetState/store';
+
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import SmallCalendar from '../Components/SmallCalendar';
 
 const Main = () => {
     const [, actionsStore] = useStore();
@@ -20,6 +24,7 @@ const Main = () => {
 
     return (
         <div>
+            <SmallCalendar />
             <button onClick={() => getFoods()}>GET DATAS</button>
             <ul>
                 {foods.map((dat, i) => (
@@ -27,6 +32,7 @@ const Main = () => {
                 ))}
             </ul>
             <div>{fetchError}</div>
+
             <button
                 onClick={() => {
                     actionsStore.logout();
