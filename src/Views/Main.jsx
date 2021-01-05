@@ -5,6 +5,15 @@ import { useStore } from '../SweetState/store';
 
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import SmallCalendar from '../Components/SmallCalendar';
+import Column from '../Components/Column';
+import { addHours, compareAsc, isSameDay } from 'date-fns';
+import {
+    CenterWrapper,
+    ColumnsWrapper,
+    LeftSideWrapper,
+    MainWrapper,
+    RightSideWrapper,
+} from '../Styled/Sites/Main';
 
 const Main = () => {
     const [, actionsStore] = useStore();
@@ -22,24 +31,109 @@ const Main = () => {
         }
     };
 
-    return (
-        <div>
-            <SmallCalendar />
-            <button onClick={() => getFoods()}>GET DATAS</button>
-            <ul>
-                {foods.map((dat, i) => (
-                    <li key={i}>{dat.description}</li>
-                ))}
-            </ul>
-            <div>{fetchError}</div>
+    const templateData = [
+        {
+            name: 'Analiza',
+            description: 'Nie wiem co tam będzie',
+            startDate: new Date(2022, 1, 7),
+            endDate: addHours(new Date(2022, 1, 7), 2),
+            type: 'zajęcia',
+            personal: false, // false - group, true - user
+            color: 'teal',
+        },
+        {
+            name: 'Metale',
+            description: 'Nie wiem co tam będzie',
+            startDate: new Date(2022, 1, 7),
+            endDate: addHours(new Date(2022, 1, 7), 2),
+            type: 'zajęcia',
+            personal: false, // false - group, true - user
+            color: 'teal',
+        },
+        {
+            name: 'Analiza',
+            description: 'Nie wiem co tam będzie',
+            startDate: new Date(2021, 1, 7),
+            endDate: addHours(new Date(2021, 1, 7), 2),
+            type: 'zajęcia',
+            personal: false, // false - group, true - user
+            color: 'red',
+        },
+        {
+            name: 'Algebra',
+            description: 'Nie wiem co tam będzie',
+            startDate: new Date(),
+            endDate: addHours(new Date(), 2),
+            type: 'zajęcia',
+            personal: false, // false - group, true - user
+            color: 'yellow',
+        },
+        {
+            name: 'Algebra',
+            description: 'Nie wiem co tam będzie',
+            startDate: addHours(new Date(), 2),
+            endDate: addHours(new Date(), 4),
+            type: 'zajęcia',
+            personal: false, // false - group, true - user
+            color: 'teal',
+        },
+    ];
+    let iterate = 0;
+    templateData.sort((a, b) => compareAsc(a.startDate, b.startDate));
+    const columns = templateData.reduce((acc, curEvent) => {
+        console.log(acc);
+        if (acc.length > 0) {
+            console.log(
+                isSameDay(acc[iterate][0].startDate, curEvent.startDate)
+            );
+            if (isSameDay(acc[iterate][0].startDate, curEvent.startDate)) {
+                acc[iterate].push(curEvent);
+                return acc;
+            } else {
+                iterate += 1;
+                acc.push([curEvent]);
+                return acc;
+            }
+        } else {
+            acc.push([curEvent]);
+            return acc;
+        }
+    }, []);
 
-            <button
-                onClick={() => {
-                    actionsStore.logout();
-                }}>
-                logout
-            </button>
-        </div>
+    return (
+        <MainWrapper>
+            <LeftSideWrapper>
+                <button>wae</button>
+            </LeftSideWrapper>
+            <CenterWrapper>
+                <ColumnsWrapper>
+                    {columns.map((column, i) => (
+                        <Column
+                            key={i}
+                            arrayEvent={column}
+                            date={column[0].startDate}
+                        />
+                    ))}
+                </ColumnsWrapper>
+            </CenterWrapper>
+            <RightSideWrapper>
+                <SmallCalendar />
+                <button onClick={() => getFoods()}>GET DATAS</button>
+                <ul>
+                    {foods.map((dat, i) => (
+                        <li key={i}>{dat.description}</li>
+                    ))}
+                </ul>
+                <div>{fetchError}</div>
+
+                <button
+                    onClick={() => {
+                        actionsStore.logout();
+                    }}>
+                    logout
+                </button>
+            </RightSideWrapper>
+        </MainWrapper>
     );
 };
 

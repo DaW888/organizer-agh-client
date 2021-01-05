@@ -152,8 +152,8 @@ const SmallCalendar = () => {
 
         if (to) {
             const c = differenceInCalendarDays(from, to);
-            if (c < -6) {
-                console.log('select max 7 days');
+            if (c < -5) {
+                console.log('select max 6 days');
                 setSelectedDay({ from: null, to: null });
                 return;
             } else {

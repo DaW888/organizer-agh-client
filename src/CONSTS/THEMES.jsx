@@ -10,6 +10,14 @@ export const light = {
     textColor: '#373F4C',
     textSoftColor: '#505359',
     accentOrange: '#FE7F7F',
+    eventColors: {
+        teal: '#1FAD94',
+        red: '#CF1B1B',
+        yellow: '#F4A52F',
+        blue: '#11B4CA',
+        magenta: '#DD2DE1',
+        green: '#439735',
+    },
     login: {
         boxShadowInput:
             'inset 6px 6px 10px #d5d9e0, inset -6px -6px 10px #ffffff',
@@ -25,6 +33,10 @@ export const light = {
                 'inset 2px 2px 3px #d5d9e0, inset -2px -2px 3px #ffffff',
             boxShadowContainer: '6px 6px 10px #d5d9e0, -6px -6px 10px #ffffff',
         },
+        columns: {
+            boxShadowColumn: '6px 6px 10px #d5d9e0, -6px -6px 10px #ffffff',
+            boxShadowEvent: '-4px -4px 6px #ffffff, 4px 4px 6px #d5d9e0',
+        },
     },
 };
 
@@ -34,6 +46,14 @@ export const dark = {
     textColor: '#D3D3DE',
     textSoftColor: '#D0D5DD',
     accentOrange: '#FE7F7F',
+    eventColors: {
+        teal: '#4ADEC4',
+        red: '#EB6565',
+        yellow: '#F9CF90',
+        blue: '#50DDF0',
+        magenta: '#EC88EE',
+        green: '#76CA68',
+    },
     login: {
         boxShadowInput:
             'inset 6px 6px 10px #292C33, inset -6px -6px 10px #3D404B',
@@ -48,6 +68,10 @@ export const dark = {
             boxShadowElementHover:
                 'inset 2px 2px 3px #292C33, inset -2px -2px 3px #3D404B',
             boxShadowContainer: '6px 6px 10px #292C33, -6px -6px 10px #3D404B',
+        },
+        columns: {
+            boxShadowColumn: '6px 6px 10px #292C33, -6px -6px 10px #3D404B',
+            boxShadowEvent: '-4px -4px 6px #3D404B, 4px 4px 6px #292C33',
         },
     },
 };
