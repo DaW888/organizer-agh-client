@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from 'date-fns';
+import { addHours, format } from 'date-fns';
 
 import Event from './Event';
 import {
@@ -10,7 +10,19 @@ import {
     TitleWrapper,
 } from '../Styled/Components/Column';
 
-const Column = ({ arrayEvent, date }) => {
+const Column = ({ date }) => {
+    const arrayEvent = [
+        {
+            name: 'Analiza',
+            description: 'Nie wiem co tam będzie',
+            startDate: new Date(2021, 1, 7),
+            endDate: addHours(new Date(2021, 1, 7), 2),
+            type: 'zajęcia',
+            personal: false, // false - group, true - user
+            color: 'red',
+        },
+    ];
+
     return (
         <ColumnWrapper>
             <HeaderWrapper>

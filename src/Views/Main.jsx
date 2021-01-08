@@ -87,27 +87,28 @@ const Main = () => {
             color: 'teal',
         },
     ];
+
     let iterate = 0;
     templateData.sort((a, b) => compareAsc(a.startDate, b.startDate));
-    const columns = templateData.reduce((acc, curEvent) => {
-        console.log(acc);
-        if (acc.length > 0) {
-            console.log(
-                isSameDay(acc[iterate][0].startDate, curEvent.startDate)
-            );
-            if (isSameDay(acc[iterate][0].startDate, curEvent.startDate)) {
-                acc[iterate].push(curEvent);
-                return acc;
-            } else {
-                iterate += 1;
-                acc.push([curEvent]);
-                return acc;
-            }
-        } else {
-            acc.push([curEvent]);
-            return acc;
-        }
-    }, []);
+    // const columns = templateData.reduce((acc, curEvent) => {
+    //     console.log(acc);
+    //     if (acc.length > 0) {
+    //         console.log(
+    //             isSameDay(acc[iterate][0].startDate, curEvent.startDate)
+    //         );
+    //         if (isSameDay(acc[iterate][0].startDate, curEvent.startDate)) {
+    //             acc[iterate].push(curEvent);
+    //             return acc;
+    //         } else {
+    //             iterate += 1;
+    //             acc.push([curEvent]);
+    //             return acc;
+    //         }
+    //     } else {
+    //         acc.push([curEvent]);
+    //         return acc;
+    //     }
+    // }, []);
 
     return (
         <MainWrapper>
@@ -124,12 +125,8 @@ const Main = () => {
             </LeftSideWrapper>
             <CenterWrapper>
                 <ColumnsWrapper>
-                    {columns.map((column, i) => (
-                        <Column
-                            key={i}
-                            arrayEvent={column}
-                            date={column[0].startDate}
-                        />
+                    {stateStore.selectedDays.map(day => (
+                        <Column key={day} date={day} />
                     ))}
                 </ColumnsWrapper>
             </CenterWrapper>

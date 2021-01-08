@@ -29,12 +29,19 @@ const actions = {
             user: null,
         });
     },
+
+    setSelectedDays: dates => async ({ setState }) => {
+        setState({
+            selectedDays: dates,
+        });
+    },
 };
 
 const Store = createStore({
     initialState: {
         user: null,
         isLightTheme: !!JSON.parse(localStorage.getItem('isLight')),
+        selectedDays: [new Date()],
     },
     actions,
     name: 'store',

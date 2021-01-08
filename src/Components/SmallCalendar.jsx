@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar } from 'react-modern-calendar-datepicker';
 import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
 import styled from 'styled-components';
+import { useStore } from '../SweetState/store';
 
 const StyledCalendarContainer = styled.div`
     margin: 10px;
@@ -139,36 +140,6 @@ const StyledCalendarContainer = styled.div`
 `;
 
 const SmallCalendar = () => {
-    const [selectedDay, setSelectedDay] = useState({
-        from: null,
-        to: null,
-    });
-
-    const handleCalendar = data => {
-        const from = new Date(data.from.year, data.from.month, data.from.day);
-        const to = data.to
-            ? new Date(data.to.year, data.to.month, data.to.day)
-            : null;
-
-        if (to) {
-            const c = differenceInCalendarDays(from, to);
-            if (c < -5) {
-                console.log('select max 6 days');
-                setSelectedDay({ from: null, to: null });
-                return;
-            } else {
-                setSelectedDay(data);
-                const arrDays = eachDayOfInterval({ start: from, end: to });
-                console.log(arrDays);
-            }
-            console.log(c);
-        }
-        setSelectedDay(data);
-
-        console.log(from, to);
-        console.log(data);
-    };
-
     const myCustomLocale = {
         // months list by order
         months: [
@@ -264,6 +235,39 @@ const SmallCalendar = () => {
 
         // is your language rtl or ltr?
         isRtl: false,
+    };
+
+    const [selectedDay, setSelectedDay] = useState({
+        from: null,
+        to: null,
+    });
+
+    const [, actionsStore] = useStore();
+
+    const handleCalendar = data => {
+        const from = new Date(data.from.year, data.from.month, data.from.day);
+        const to = data.to
+            ? new Date(data.to.year, data.to.month, data.to.day)
+            : null;
+
+        if (to) {
+            const c = differenceInCalendarDays(from, to);
+            if (c < -5) {
+                console.log('select max 6 days');
+                setSelectedDay({ from: null, to: null });
+                return;
+            } else {
+                setSelectedDay(data);
+                const arrDays = eachDayOfInterval({ start: from, end: to });
+                actionsStore.setSelectedDays(arrDays);
+                console.log(arrDays);
+            }
+            console.log(c);
+        }
+        setSelectedDay(data);
+
+        console.log(from, to);
+        console.log(data);
     };
 
     return (
