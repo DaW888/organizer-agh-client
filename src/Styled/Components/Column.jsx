@@ -68,4 +68,5 @@ export const AddWrapper = styled.button`
     min-width: 120px;
     width: 8vw;
     border-radius: 12px;
+    cursor: pointer;
 `;

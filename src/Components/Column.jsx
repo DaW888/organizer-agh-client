@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { addHours, format } from 'date-fns';
-
 import Event from './Event';
 import {
     AddWrapper,
@@ -9,8 +8,11 @@ import {
     TextDate,
     TitleWrapper,
 } from '../Styled/Components/Column';
+import AddEvent from './AddEvent';
 
 const Column = ({ date }) => {
+    const [isAddOpen, setIsAddOpen] = useState(false);
+
     const arrayEvent = [
         {
             name: 'Analiza',
@@ -28,7 +30,10 @@ const Column = ({ date }) => {
             <HeaderWrapper>
                 <TitleWrapper>{format(date, 'EEEE')}</TitleWrapper>
                 <TextDate>{format(date, 'dd / MM / yyyy')}</TextDate>
-                <AddWrapper>+</AddWrapper>
+                <AddWrapper onClick={() => setIsAddOpen(prev => !prev)}>
+                    {isAddOpen ? '-' : '+'}
+                </AddWrapper>
+                {isAddOpen && <AddEvent date={date} />}
             </HeaderWrapper>
             <div>
                 {arrayEvent.map((event, i) => (
