@@ -31,8 +31,8 @@ const Column = ({ date }) => {
                 <AddWrapper>+</AddWrapper>
             </HeaderWrapper>
             <div>
-                {arrayEvent.map(event => (
-                    <Event key={event.name + event.endDate} data={event} />
+                {arrayEvent.map((event, i) => (
+                    <Event key={i} data={event} />
                 ))}
             </div>
         </ColumnWrapper>

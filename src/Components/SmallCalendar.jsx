@@ -8,7 +8,6 @@ const StyledCalendarContainer = styled.div`
     margin: 10px;
 
     .Calendar {
-        transition: ${({ theme }) => theme.transition};
         font-family: Open Sans, sans-serif;
         min-height: 22em;
         max-height: 32em;
@@ -24,7 +23,6 @@ const StyledCalendarContainer = styled.div`
         .Calendar__monthYear.-shown > :hover,
         .Calendar:not(.-noFocusOutline) .Calendar__monthYear.-shown > :focus,
         .Calendar__monthYear > .-activeBackground {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             box-shadow: ${({ theme }) =>
                 theme.main.smallCalendar.boxShadowElement};
@@ -41,19 +39,16 @@ const StyledCalendarContainer = styled.div`
 
         &__monthSelector,
         &__yearSelector {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
         }
 
         &__monthSelectorItem {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             color: ${({ theme }) => theme.textColor};
         }
 
         .Calendar__monthSelectorItemText,
         .Calendar__yearSelectorText {
-            transition: ${({ theme }) => theme.transition};
             color: ${({ theme }) => theme.textColor};
             padding: 6px;
             background: ${({ theme }) => theme.bgMainColor};
@@ -65,7 +60,6 @@ const StyledCalendarContainer = styled.div`
             .Calendar__monthSelectorItemText:not(:disabled):hover,
         .Calendar__yearSelectorItem:not(.-active)
             .Calendar__yearSelectorText:not(:disabled):hover {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             box-shadow: ${({ theme }) =>
                 theme.main.smallCalendar.boxShadowElementHover};
@@ -73,7 +67,6 @@ const StyledCalendarContainer = styled.div`
 
         .Calendar__monthSelectorItem.-active .Calendar__monthSelectorItemText,
         .Calendar__yearSelectorItem.-active .Calendar__yearSelectorText {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             color: ${({ theme }) => theme.accentOrange};
             box-shadow: ${({ theme }) =>
@@ -81,19 +74,16 @@ const StyledCalendarContainer = styled.div`
         }
 
         &__monthSelectorItemText {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             color: ${({ theme }) => theme.textColor};
         }
 
         &__monthText,
         &__yearText {
-            transition: ${({ theme }) => theme.transition};
             color: ${({ theme }) => theme.textColor};
         }
 
         &__day {
-            transition: ${({ theme }) => theme.transition};
             min-height: 2.2em;
             background: ${({ theme }) => theme.bgMainColor};
             box-shadow: ${({ theme }) =>
@@ -115,7 +105,6 @@ const StyledCalendarContainer = styled.div`
         .-selectedBetween,
         .-selectedStart,
         .-selectedEnd {
-            transition: ${({ theme }) => theme.transition};
             box-shadow: ${({ theme }) =>
                 theme.main.smallCalendar.boxShadowElementHover};
             color: ${({ theme }) => theme.accentOrange};
@@ -123,7 +112,6 @@ const StyledCalendarContainer = styled.div`
     }
 
     .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
-        transition: ${({ theme }) => theme.transition};
         background: none;
         border: none;
         color: ${({ theme }) => theme.textColor};
