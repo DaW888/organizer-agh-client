@@ -10,13 +10,22 @@ import { addHours, compareAsc, isSameDay } from 'date-fns';
 import {
     CenterWrapper,
     ColumnsWrapper,
+    IconButtonWrapper,
     LeftSideWrapper,
     MainWrapper,
     RightSideWrapper,
 } from '../Styled/Sites/Main';
 
+import { ReactComponent as LogoutIcon } from '../assets/icons/logout.svg';
+import { ReactComponent as MoonIcon } from '../assets/icons/moon.svg';
+import { ReactComponent as SunIcon } from '../assets/icons/sun.svg';
+import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
+import { useHistory } from 'react-router-dom';
+
 const Main = () => {
-    const [, actionsStore] = useStore();
+    const history = useHistory();
+
+    const [stateStore, actionsStore] = useStore();
     const [foods, setFoods] = useState([]);
     const [fetchError, setFetchError] = useState(null);
 
@@ -103,7 +112,15 @@ const Main = () => {
     return (
         <MainWrapper>
             <LeftSideWrapper>
-                <button>wae</button>
+                <IconButtonWrapper onClick={() => history.push('/settings')}>
+                    <SettingsIcon />
+                </IconButtonWrapper>
+                <IconButtonWrapper onClick={() => actionsStore.changeTheme()}>
+                    {stateStore.isLightTheme ? <MoonIcon /> : <SunIcon />}
+                </IconButtonWrapper>
+                <IconButtonWrapper onClick={() => actionsStore.logout()}>
+                    <LogoutIcon />
+                </IconButtonWrapper>
             </LeftSideWrapper>
             <CenterWrapper>
                 <ColumnsWrapper>
@@ -125,13 +142,6 @@ const Main = () => {
                     ))}
                 </ul>
                 <div>{fetchError}</div>
-
-                <button
-                    onClick={() => {
-                        actionsStore.logout();
-                    }}>
-                    logout
-                </button>
             </RightSideWrapper>
         </MainWrapper>
     );

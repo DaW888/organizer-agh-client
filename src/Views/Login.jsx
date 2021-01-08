@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import { useStore } from '../SweetState/store';
 
 import projectIllustration from '../assets/illustrations/projectIllustration.svg';
+import ButtonTheme from '../Components/ButtonTheme';
 
 const Login = () => {
     const history = useHistory();
@@ -53,6 +54,7 @@ const Login = () => {
     }, []);
     return (
         <LoginContainer>
+            <ButtonTheme />
             <AghHeader>AGH Organizer</AghHeader>
             <Title>All your events in one place</Title>
             <Main>

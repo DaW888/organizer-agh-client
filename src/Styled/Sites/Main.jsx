@@ -28,7 +28,7 @@ export const CenterWrapper = styled.div`
 export const LeftSideWrapper = styled.aside`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     position: sticky;
     z-index: 2;
@@ -45,6 +45,7 @@ export const LeftSideWrapper = styled.aside`
         width: 86vw;
         height: 60px;
         margin: 12px 0 12px 0;
+        flex-direction: row;
     }
 `;
 export const RightSideWrapper = styled.aside`
@@ -60,5 +61,20 @@ export const RightSideWrapper = styled.aside`
         align-items: center;
         height: 100%;
         margin: 12px 0 12px 0;
+    }
+`;
+
+export const IconButtonWrapper = styled.button`
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    svg {
+        width: 36px;
+        height: 36px;
+
+        path {
+            fill: ${({ theme }) => theme.textSoftColor};
+        }
     }
 `;

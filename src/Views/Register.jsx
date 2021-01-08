@@ -15,6 +15,7 @@ import {
     StyledLink,
 } from '../Styled/Sites/Login';
 import projectIllustration from '../assets/illustrations/projectIllustration.svg';
+import ButtonTheme from '../Components/ButtonTheme';
 
 const Register = () => {
     const history = useHistory();
@@ -59,6 +60,7 @@ const Register = () => {
 
     return (
         <LoginContainer>
+            <ButtonTheme />
             <AghHeader>AGH Organizer</AghHeader>
             <Title>Create account to start your journey</Title>
             <Main>

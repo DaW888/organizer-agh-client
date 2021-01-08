@@ -10,12 +10,10 @@ import axios from 'axios';
 import { useStore } from './SweetState/store';
 import { ThemeProvider } from 'styled-components';
 import { light, dark } from './CONSTS/THEMES';
-import ButtonTheme from './Components/ButtonTheme';
 
 const App = () => {
     // sweet state
     const [stateStore, actionsStore] = useStore();
-
     // axios interceptors
     axios.interceptors.request.use(
         req => {
@@ -43,7 +41,6 @@ const App = () => {
         <ThemeProvider theme={stateStore.isLightTheme ? light : dark}>
             <>
                 <GlobalStyles />
-                <ButtonTheme />
                 <Router>
                     <Switch>
                         <Route path="/register">
@@ -52,8 +49,11 @@ const App = () => {
                         <Route path="/login">
                             <Login />
                         </Route>
-                        <AuthenticatedRoute path="/">
+                        <AuthenticatedRoute exact path="/">
                             <Main />
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute exact path="/settings">
+                            <div>elo</div>
                         </AuthenticatedRoute>
                     </Switch>
                 </Router>
