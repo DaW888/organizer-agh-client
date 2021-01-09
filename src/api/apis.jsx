@@ -27,3 +27,8 @@ export const removeToken = async () => {
         console.log(err);
     }
 };
+
+export const getAllGroups = async () => {
+    const { data } = await axios.get(`/api/getAllGroups`);
+    return data;
+};
