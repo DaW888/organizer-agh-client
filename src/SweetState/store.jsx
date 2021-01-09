@@ -19,6 +19,7 @@ const actions = {
                 id: data._id,
                 name: data.name,
                 surname: data.surname,
+                groups: data.groups,
             },
         });
     },
@@ -33,6 +34,15 @@ const actions = {
     setSelectedDays: dates => async ({ setState }) => {
         setState({
             selectedDays: dates,
+        });
+    },
+
+    updateUserGroups: groups => ({ setState, getState }) => {
+        setState({
+            user: {
+                ...getState().user,
+                groups,
+            },
         });
     },
 };

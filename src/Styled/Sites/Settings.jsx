@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as api from '../../api/apis';
+import { useStore } from '../../SweetState/store';
 
 const SettingsWrapper = styled.div`
     display: flex;
@@ -55,9 +56,23 @@ const FormWrapper = styled.form`
     align-items: center;
 `;
 
+const FormPasswordWrapper = styled.form`
+    display: flex;
+    flex-direction: column;
+`;
+
 const Settings = () => {
+    const [stateStore, actionsStore] = useStore();
+
+    const [groupsUpdatedMessage, setGroupsUpdatedMessage] = useState('');
     const [nestedGroups, setNestedGroups] = useState([]);
     const [selectedGroups, setSelectedGroups] = useState({});
+
+    const [passwordUpdateMessage, setPasswordUpdateMessage] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [repNewPassword, setRepNewPassword] = useState('');
+
     const concatGroups = groups => {
         console.log('elo2');
         let iterate = 0;
@@ -82,7 +97,10 @@ const Settings = () => {
         concatedGroups.forEach(groups => {
             console.log('leci');
             const gr = {};
-            gr[groups[0].type] = groups[0]._id;
+            gr[groups[0].type] = {
+                _id: groups[0]._id,
+                lastNames: `${groups[0].nr} ${groups[0].lastNames}`,
+            };
             setSelectedGroups(prevState => ({
                 ...prevState,
                 ...gr,
@@ -103,18 +121,54 @@ const Settings = () => {
         })();
     }, []);
 
-    const handleSubmitUpdateGroups = e => {
+    const handleSubmitUpdateGroups = async e => {
         e.preventDefault();
         console.log(selectedGroups);
+        try {
+            const res = await api.changeUserGroups({
+                selectedGroups,
+                userId: stateStore.user.id,
+            });
+            console.log(res);
+            setGroupsUpdatedMessage('Groups updated');
+            actionsStore.updateUserGroups(selectedGroups);
+        } catch (err) {
+            console.log(err);
+            setGroupsUpdatedMessage(`Can't update groups`);
+        }
     };
 
     const handleSelectChange = e => {
         console.log(e.target.name);
-        console.log(e.target.value);
+        const values = JSON.parse(e.target.value);
         setSelectedGroups(prevState => ({
             ...prevState,
-            [e.target.name]: e.target.value,
+            [e.target.name]: {
+                _id: values._id,
+                lastNames: values.lastNames,
+            },
         }));
+    };
+
+    const handlePasswordSubmit = async e => {
+        e.preventDefault();
+
+        if (!(newPassword === repNewPassword)) {
+            setPasswordUpdateMessage(
+                'Repeated password not same as new password'
+            );
+        } else {
+            try {
+                const res = await api.updateUserPassword({
+                    userId: stateStore.user.id,
+                    newPass: newPassword,
+                    oldPass: oldPassword,
+                });
+                setPasswordUpdateMessage(res.message);
+            } catch (err) {
+                setPasswordUpdateMessage(err.response.data.message);
+            }
+        }
     };
 
     return (
@@ -127,15 +181,31 @@ const Settings = () => {
                     <p>Michał</p>
                     <p>Michał</p>
                 </InputsWrapper>
-                <InputsWrapper>
+                <FormPasswordWrapper onSubmit={handlePasswordSubmit}>
                     <SmallTitleWrapper>Change Password</SmallTitleWrapper>
-                    <InputWrapper type="password" placeholder="Old Password" />
-                    <InputWrapper type="password" placeholder="New Password" />
                     <InputWrapper
+                        type="password"
+                        placeholder="Old Password"
+                        value={oldPassword}
+                        onChange={e => setOldPassword(e.target.value)}
+                    />
+                    <InputWrapper
+                        type="password"
+                        placeholder="New Password"
+                        value={newPassword}
+                        onChange={e => setNewPassword(e.target.value)}
+                    />
+                    <InputWrapper
+                        value={repNewPassword}
+                        onChange={e => setRepNewPassword(e.target.value)}
                         type="password"
                         placeholder="Repeat New Password"
                     />
-                </InputsWrapper>
+                    <input type="submit" value="Update" />
+                    {passwordUpdateMessage && (
+                        <div>{passwordUpdateMessage}</div>
+                    )}
+                </FormPasswordWrapper>
             </ProfileInformationWrapper>
             <FormWrapper onSubmit={handleSubmitUpdateGroups}>
                 <GroupsWrapper>
@@ -146,7 +216,12 @@ const Settings = () => {
                                 name={groups[0].type}
                                 onChange={handleSelectChange}>
                                 {groups.map((group, j) => (
-                                    <option value={group._id} key={j}>
+                                    <option
+                                        value={JSON.stringify({
+                                            _id: group._id,
+                                            lastNames: `${group.nr} ${group.lastNames}`,
+                                        })}
+                                        key={j}>
                                         {group.nr} {group.lastNames}
                                     </option>
                                 ))}
@@ -155,6 +230,7 @@ const Settings = () => {
                     ))}
                 </GroupsWrapper>
                 <input type="submit" value="update Groups" />
+                {groupsUpdatedMessage && <div>{groupsUpdatedMessage}</div>}
             </FormWrapper>
         </SettingsWrapper>
     );

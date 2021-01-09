@@ -32,3 +32,13 @@ export const getAllGroups = async () => {
     const { data } = await axios.get(`/api/getAllGroups`);
     return data;
 };
+
+export const changeUserGroups = async userIdAndGroups => {
+    const { data } = await axios.post(`/api/changeUserGroups`, userIdAndGroups);
+    return data;
+};
+
+export const updateUserPassword = async userData => {
+    const { data } = await axios.post(`/api/updateUserPassword`, userData);
+    return data;
+};
