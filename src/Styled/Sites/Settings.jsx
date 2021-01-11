@@ -1,239 +1,168 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import * as api from '../../api/apis';
-import { useStore } from '../../SweetState/store';
 
-const SettingsWrapper = styled.div`
+export const SettingsWrapper = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
     color: ${({ theme }) => theme.textSoftColor};
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 0;
+        align-items: center;
+    }
 `;
 
-const SettingsTitleWrapper = styled.h1`
+export const SettingsTitleWrapper = styled.h1`
     color: ${({ theme }) => theme.textColor};
     text-align: center;
     margin: 40px 0 40px 0;
     font-family: Proza Libre, sans-serif;
     font-weight: 600;
     font-size: 46px;
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 20px 0 20px 0;
+        font-size: 28px;
+    }
 `;
-const SmallTitleWrapper = styled.h3`
+export const SmallTitleWrapper = styled.h3`
     color: ${({ theme }) => theme.textColor};
     font-family: Nunito, sans-serif;
     margin: 0;
     text-align: center;
     font-size: 26px;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        font-size: 20px;
+    }
 `;
-const ProfileInformationWrapper = styled.div`
+export const ProfileInformationWrapper = styled.div`
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 24px;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        flex-direction: column;
+    }
 `;
 
-const InputsWrapper = styled.div`
+export const InputsWrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
 
-const InputWrapper = styled.input`
-    margin: 4px 0 4px 0;
+export const InputWrapper = styled.input`
+    width: 20vw;
+    min-width: 200px;
+    max-width: 400px;
+    background-color: ${({ theme }) => theme.bgMainColor};
+    color: ${({ theme }) => theme.textSoftColor};
+    border: none;
+    border-radius: 10px;
+    box-shadow: ${({ theme }) => theme.settings.input};
+    padding: 8px 12px;
+    font-size: 16px;
+    margin: 12px 0;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 8px 0;
+        width: 80vw;
+    }
 `;
 
-const GroupsWrapper = styled.div`
+export const GroupsWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 60vw;
+    width: 50vw;
+    margin-bottom: 20px;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        width: 82vw;
+    }
 `;
 
-const GroupWrapper = styled.div`
+export const GroupWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 `;
-const FormWrapper = styled.form`
+export const FormWrapper = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 32px;
 `;
 
-const FormPasswordWrapper = styled.form`
+export const FormPasswordWrapper = styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 20px 0;
+    }
 `;
 
-const Settings = () => {
-    const [stateStore, actionsStore] = useStore();
+export const PWrapper = styled.p`
+    font-size: 18px;
+    background-color: ${({ theme }) => theme.bgMainColor};
+    box-shadow: ${({ theme }) => theme.settings.button};
+    width: 20vw;
+    min-width: 200px;
+    max-width: 400px;
+    text-align: center;
+    padding: 4px 6px 4px 6px;
+    border-radius: 120px;
+    margin: 12px 0;
 
-    const [groupsUpdatedMessage, setGroupsUpdatedMessage] = useState('');
-    const [nestedGroups, setNestedGroups] = useState([]);
-    const [selectedGroups, setSelectedGroups] = useState({});
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        margin: 8px 0;
+        width: 80vw;
+    }
+`;
 
-    const [passwordUpdateMessage, setPasswordUpdateMessage] = useState('');
-    const [oldPassword, setOldPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [repNewPassword, setRepNewPassword] = useState('');
+export const InputButton = styled.input`
+    background-color: ${({ theme }) => theme.bgMainColor};
+    box-shadow: ${({ theme }) => theme.settings.button};
+    color: ${({ theme }) => theme.textColor};
+    border: none;
+    font-size: ${({ small }) => (small ? '16px' : '20px')};
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 16vw;
+    min-width: 120px;
+    max-width: 220px;
+    margin-top: 12px;
 
-    const concatGroups = groups => {
-        console.log('elo2');
-        let iterate = 0;
-        return groups.reduce((acc, curGroup) => {
-            if (acc.length > 0) {
-                if (acc[iterate][0].type === curGroup.type) {
-                    acc[iterate].push(curGroup);
-                    return acc;
-                } else {
-                    iterate += 1;
-                    acc.push([curGroup]);
-                    return acc;
-                }
-            } else {
-                acc.push([curGroup]);
-                return acc;
-            }
-        }, []);
-    };
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        font-size: 16px;
+        width: 40vw;
+        margin-bottom: 20px;
+    }
+`;
 
-    const initSelectedGroups = concatedGroups => {
-        concatedGroups.forEach(groups => {
-            console.log('leci');
-            const gr = {};
-            gr[groups[0].type] = {
-                _id: groups[0]._id,
-                lastNames: `${groups[0].nr} ${groups[0].lastNames}`,
-            };
-            setSelectedGroups(prevState => ({
-                ...prevState,
-                ...gr,
-            }));
-        });
-    };
+export const SelectWrapper = styled.select`
+    font-size: 16px;
+    text-align: center;
+    width: 18vw;
+    min-width: 180px;
+    max-width: 300px;
+    border: none;
+    background-color: ${({ theme }) => theme.bgMainColor};
+    color: ${({ theme }) => theme.textSoftColor};
+    border-radius: 12px;
+    box-shadow: ${({ theme }) => theme.settings.button};
+    padding: 6px 12px;
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const { groups } = await api.getAllGroups();
-                const concatedGroups = concatGroups(groups);
-                setNestedGroups(concatedGroups);
-                initSelectedGroups(concatedGroups);
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, []);
+    ::-ms-expand {
+        display: none;
+    }
 
-    const handleSubmitUpdateGroups = async e => {
-        e.preventDefault();
-        console.log(selectedGroups);
-        try {
-            const res = await api.changeUserGroups({
-                selectedGroups,
-                userId: stateStore.user.id,
-            });
-            console.log(res);
-            setGroupsUpdatedMessage('Groups updated');
-            actionsStore.updateUserGroups(selectedGroups);
-        } catch (err) {
-            console.log(err);
-            setGroupsUpdatedMessage(`Can't update groups`);
-        }
-    };
+    -webkit-appearance: none;
+    appearance: none;
 
-    const handleSelectChange = e => {
-        console.log(e.target.name);
-        const values = JSON.parse(e.target.value);
-        setSelectedGroups(prevState => ({
-            ...prevState,
-            [e.target.name]: {
-                _id: values._id,
-                lastNames: values.lastNames,
-            },
-        }));
-    };
-
-    const handlePasswordSubmit = async e => {
-        e.preventDefault();
-
-        if (!(newPassword === repNewPassword)) {
-            setPasswordUpdateMessage(
-                'Repeated password not same as new password'
-            );
-        } else {
-            try {
-                const res = await api.updateUserPassword({
-                    userId: stateStore.user.id,
-                    newPass: newPassword,
-                    oldPass: oldPassword,
-                });
-                setPasswordUpdateMessage(res.message);
-            } catch (err) {
-                setPasswordUpdateMessage(err.response.data.message);
-            }
-        }
-    };
-
-    return (
-        <SettingsWrapper>
-            <SettingsTitleWrapper>Settings</SettingsTitleWrapper>
-            <ProfileInformationWrapper>
-                <InputsWrapper>
-                    <SmallTitleWrapper>Profile</SmallTitleWrapper>
-                    <p>Michał</p>
-                    <p>Michał</p>
-                    <p>Michał</p>
-                </InputsWrapper>
-                <FormPasswordWrapper onSubmit={handlePasswordSubmit}>
-                    <SmallTitleWrapper>Change Password</SmallTitleWrapper>
-                    <InputWrapper
-                        type="password"
-                        placeholder="Old Password"
-                        value={oldPassword}
-                        onChange={e => setOldPassword(e.target.value)}
-                    />
-                    <InputWrapper
-                        type="password"
-                        placeholder="New Password"
-                        value={newPassword}
-                        onChange={e => setNewPassword(e.target.value)}
-                    />
-                    <InputWrapper
-                        value={repNewPassword}
-                        onChange={e => setRepNewPassword(e.target.value)}
-                        type="password"
-                        placeholder="Repeat New Password"
-                    />
-                    <input type="submit" value="Update" />
-                    {passwordUpdateMessage && (
-                        <div>{passwordUpdateMessage}</div>
-                    )}
-                </FormPasswordWrapper>
-            </ProfileInformationWrapper>
-            <FormWrapper onSubmit={handleSubmitUpdateGroups}>
-                <GroupsWrapper>
-                    {nestedGroups.map((groups, i) => (
-                        <GroupWrapper key={i}>
-                            <p>{groups[0].name}</p>
-                            <select
-                                name={groups[0].type}
-                                onChange={handleSelectChange}>
-                                {groups.map((group, j) => (
-                                    <option
-                                        value={JSON.stringify({
-                                            _id: group._id,
-                                            lastNames: `${group.nr} ${group.lastNames}`,
-                                        })}
-                                        key={j}>
-                                        {group.nr} {group.lastNames}
-                                    </option>
-                                ))}
-                            </select>
-                        </GroupWrapper>
-                    ))}
-                </GroupsWrapper>
-                <input type="submit" value="update Groups" />
-                {groupsUpdatedMessage && <div>{groupsUpdatedMessage}</div>}
-            </FormWrapper>
-        </SettingsWrapper>
-    );
-};
-
-export default Settings;
+    @media (max-width: ${({ theme }) => theme.phoneSize}) {
+        width: 50vw;
+    }
+`;

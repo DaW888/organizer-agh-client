@@ -37,6 +37,15 @@ export const light = {
             boxShadowColumn: '6px 6px 10px #d5d9e0, -6px -6px 10px #ffffff',
             boxShadowEvent: '-4px -4px 6px #ffffff, 4px 4px 6px #d5d9e0',
         },
+        addEvent: {
+            smallInput:
+                'inset -2px -2px 4px #ffffff, inset 2px 2px 4px #d5d9e0',
+            smallButton: '-2px -2px 4px #ffffff, 2px 2px 4px #d5d9e0',
+        },
+    },
+    settings: {
+        input: 'inset -4px -4px 8px #ffffff, inset 4px 4px 8px #d5d9e0',
+        button: '-4px -4px 8px #ffffff, 4px 4px 8px #d5d9e0',
     },
 };
 
@@ -47,10 +56,10 @@ export const dark = {
     textSoftColor: '#D0D5DD',
     accentOrange: '#FE7F7F',
     eventColors: {
-        teal: '#4ADEC4',
+        teal: '#4adec4',
         red: '#EB6565',
         yellow: '#F9CF90',
-        blue: '#50DDF0',
+        blue: '#50ddf0',
         magenta: '#EC88EE',
         green: '#76CA68',
     },
@@ -73,5 +82,14 @@ export const dark = {
             boxShadowColumn: '6px 6px 10px #292C33, -6px -6px 10px #3D404B',
             boxShadowEvent: '-4px -4px 6px #3D404B, 4px 4px 6px #292C33',
         },
+        addEvent: {
+            smallInput:
+                'inset -2px -2px 4px #3D404B, inset 2px 2px 4px #292C33',
+            smallButton: '-2px -2px 4px #3D404B, 2px 2px 4px #292C33',
+        },
+    },
+    settings: {
+        input: 'inset -4px -4px 8px #3D404B, inset 4px 4px 8px #292C33',
+        button: '-4px -4px 8px #3D404B, 4px 4px 8px #292C33',
     },
 };

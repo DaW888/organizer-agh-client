@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useStore } from './SweetState/store';
 import { ThemeProvider } from 'styled-components';
 import { light, dark } from './CONSTS/THEMES';
-import Settings from './Styled/Sites/Settings';
+import Settings from './Views/Settings';
 
 const App = () => {
     // sweet state

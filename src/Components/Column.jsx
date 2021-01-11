@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { addHours, format } from 'date-fns';
+import React, { useState, useEffect } from 'react';
+import { format, compareAsc } from 'date-fns';
+
 import Event from './Event';
 import {
     AddWrapper,
@@ -9,21 +10,41 @@ import {
     TitleWrapper,
 } from '../Styled/Components/Column';
 import AddEvent from './AddEvent';
+import * as api from '../api/apis';
+import { useStore } from '../SweetState/store';
 
 const Column = ({ date }) => {
+    const [stateStore] = useStore();
     const [isAddOpen, setIsAddOpen] = useState(false);
+    const [events, setEvents] = useState([]);
+    const [isEventEdited, setIsEventEdited] = useState(false);
+    useEffect(() => {
+        (async () => {
+            const groupsArr = Object.values(stateStore.user.groups).map(
+                group => group._id
+            );
+            try {
+                const res = await api.getEvents({
+                    groupsId: groupsArr,
+                    date: date.getTime(),
+                });
+                const eventsArr = res.map(events => events.events);
+                const flatEvents = eventsArr.flat();
+                flatEvents.sort((a, b) =>
+                    compareAsc(new Date(a.dateStart), new Date(b.dateStart))
+                );
+                console.log(date);
+                console.log(flatEvents);
+                setEvents(flatEvents);
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, [isEventEdited]);
 
-    const arrayEvent = [
-        {
-            name: 'Analiza',
-            description: 'Nie wiem co tam będzie',
-            startDate: new Date(2021, 1, 7),
-            endDate: addHours(new Date(2021, 1, 7), 2),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'red',
-        },
-    ];
+    const handleEditEvent = () => {
+        setIsEventEdited(prev => !prev);
+    };
 
     return (
         <ColumnWrapper>
@@ -33,12 +54,19 @@ const Column = ({ date }) => {
                 <AddWrapper onClick={() => setIsAddOpen(prev => !prev)}>
                     {isAddOpen ? '-' : '+'}
                 </AddWrapper>
-                {isAddOpen && <AddEvent date={date} />}
+                {isAddOpen && (
+                    <AddEvent date={date} isEventAdded={handleEditEvent} />
+                )}
             </HeaderWrapper>
             <div>
-                {arrayEvent.map((event, i) => (
-                    <Event key={i} data={event} />
-                ))}
+                {events.length > 0 &&
+                    events.map((event, i) => (
+                        <Event
+                            key={i}
+                            data={event}
+                            isEventEdited={handleEditEvent}
+                        />
+                    ))}
             </div>
         </ColumnWrapper>
     );

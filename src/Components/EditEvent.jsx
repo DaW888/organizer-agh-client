@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../SweetState/store';
 import { light } from '../CONSTS/THEMES';
-import { compareAsc } from 'date-fns';
+import { compareAsc, format } from 'date-fns';
 import * as api from '../api/apis';
 import {
     FormWrapper,
@@ -12,21 +12,22 @@ import {
     TextareaWrapper,
 } from '../Styled/Components/AddEvent';
 
-const AddEvent = ({ date, isEventAdded }) => {
+const EditEvent = ({ data, clickDiscard, clickRemove, clickEdit }) => {
+    console.log(data);
     const [stateStore] = useStore();
 
     const [message, setMessage] = useState('');
 
-    const [nameEvent, setNameEvent] = useState('');
-    const [startEvent, setStartEvent] = useState('');
-    const [endEvent, setEndEvent] = useState('');
-    const [typeEvent, setTypeEvent] = useState(
-        Object.keys(light.eventColors)[0]
+    const [nameEvent, setNameEvent] = useState(data.name);
+    const [startEvent, setStartEvent] = useState(
+        format(new Date(data.dateStart), 'H:mm')
     );
-    const [groupEvent, setGroupEvent] = useState(
-        Object.values(stateStore.user.groups)[0]
+    const [endEvent, setEndEvent] = useState(
+        format(new Date(data.dateEnd), 'H:mm')
     );
-    const [descriptionEvent, setDescriptionEvent] = useState('');
+    const [typeEvent, setTypeEvent] = useState(data.type);
+    const [groupEvent, setGroupEvent] = useState(data.group);
+    const [descriptionEvent, setDescriptionEvent] = useState(data.description);
 
     const displaySelectGroups = () => {
         const groups = stateStore.user.groups;
@@ -60,19 +61,11 @@ const AddEvent = ({ date, isEventAdded }) => {
 
     const handleSubmitEvent = async e => {
         e.preventDefault();
-        console.log(date);
-        console.log(nameEvent);
-        console.log(startEvent);
-        console.log(endEvent);
-        console.log(typeEvent);
-        console.log(groupEvent);
-        console.log(descriptionEvent);
-
         const startTime = startEvent.split(':');
         const endTime = endEvent.split(':');
 
-        const dateStart = new Date(date);
-        const dateEnd = new Date(date);
+        const dateStart = new Date(data.dateStart);
+        const dateEnd = new Date(data.dateEnd);
         dateStart.setHours(parseInt(startTime[0]));
         dateStart.setMinutes(parseInt(startTime[1]));
         dateStart.setSeconds(0);
@@ -84,12 +77,11 @@ const AddEvent = ({ date, isEventAdded }) => {
             return;
         }
         if (compareAsc(dateStart, dateEnd) in [-1, 0]) {
-            console.log('zla data');
             setMessage('wrong date');
         } else {
             setMessage('');
-            console.log('dobra data');
             const event = {
+                _id: data._id,
                 name: nameEvent,
                 dateStart,
                 dateEnd,
@@ -98,15 +90,15 @@ const AddEvent = ({ date, isEventAdded }) => {
                 description: descriptionEvent,
             };
             try {
-                const res = await api.addEvent(event);
+                const res = await api.editEvent(event);
                 console.log(res);
-                setMessage('Event Added');
+                setMessage('Event Edited');
 
                 setNameEvent('');
                 setStartEvent('');
                 setEndEvent('');
                 setDescriptionEvent('');
-                isEventAdded();
+                clickEdit();
             } catch (err) {
                 console.log(err);
                 setMessage(`Can't add Event`);
@@ -115,7 +107,7 @@ const AddEvent = ({ date, isEventAdded }) => {
     };
 
     return (
-        <FormWrapper onSubmit={e => handleSubmitEvent(e)}>
+        <FormWrapper modify onSubmit={e => handleSubmitEvent(e)}>
             <InputWrapper
                 required
                 type="text"
@@ -149,14 +141,27 @@ const AddEvent = ({ date, isEventAdded }) => {
                 rows="4"
             />
             <InputWrapper
-                color="green"
                 button
+                color="blue"
                 type="submit"
-                value="Add Event"
+                value="Edit Event"
+            />
+            <InputWrapper
+                button
+                color="red"
+                type="button"
+                value="Remove Event"
+                onClick={clickRemove}
+            />
+            <InputWrapper
+                button
+                type="button"
+                value="Discard Changes"
+                onClick={clickDiscard}
             />
             {message}
         </FormWrapper>
     );
 };
 
-export default AddEvent;
+export default EditEvent;

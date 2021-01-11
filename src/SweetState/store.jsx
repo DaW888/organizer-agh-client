@@ -31,7 +31,7 @@ const actions = {
         });
     },
 
-    setSelectedDays: dates => async ({ setState }) => {
+    setSelectedDays: dates => ({ setState }) => {
         setState({
             selectedDays: dates,
         });
