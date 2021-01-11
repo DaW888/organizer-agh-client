@@ -1,48 +1,19 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useStore } from '../SweetState/store';
 import { light } from '../CONSTS/THEMES';
 import { compareAsc } from 'date-fns';
 import * as api from '../api/apis';
-
-const FormWrapper = styled.form`
-    margin: 4px 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-const InputWrapper = styled.input`
-    margin: 2px;
-    width: 90%;
-    font-size: 13px;
-`;
-
-const SmallInputsWrapper = styled.div`
-    margin: 2px 0 6px 0;
-    display: flex;
-    justify-content: space-between;
-`;
-
-const InputHalfWrapper = styled.input`
-    width: 48%;
-    font-size: 10px;
-`;
-
-const SelectWrapper = styled.select``;
-
-const TextareaWrapper = styled.textarea`
-    outline: none;
-    resize: none;
-    overflow: auto;
-
-    ::placeholder {
-        text-align: center;
-    }
-`;
+import {
+    FormWrapper,
+    InputHalfWrapper,
+    InputWrapper,
+    SelectWrapper,
+    SmallInputsWrapper,
+    TextareaWrapper,
+} from '../Styled/Components/AddEvent';
 
 const AddEvent = ({ date, isEventAdded }) => {
-    const [stateStore, actionsStore] = useStore();
+    const [stateStore] = useStore();
 
     const [message, setMessage] = useState('');
 
@@ -65,9 +36,10 @@ const AddEvent = ({ date, isEventAdded }) => {
             </option>
         ));
         return (
-            <select onChange={e => setGroupEvent(JSON.parse(e.target.value))}>
+            <SelectWrapper
+                onChange={e => setGroupEvent(JSON.parse(e.target.value))}>
                 {jsxGroups}
-            </select>
+            </SelectWrapper>
         );
     };
 
@@ -80,9 +52,9 @@ const AddEvent = ({ date, isEventAdded }) => {
         ));
 
         return (
-            <select onChange={e => setTypeEvent(e.target.value)}>
+            <SelectWrapper onChange={e => setTypeEvent(e.target.value)}>
                 {jsxColors}
-            </select>
+            </SelectWrapper>
         );
     };
 
@@ -176,7 +148,12 @@ const AddEvent = ({ date, isEventAdded }) => {
                 placeholder="description"
                 rows="4"
             />
-            <InputWrapper type="submit" value="Add Event" />
+            <InputWrapper
+                color="green"
+                button
+                type="submit"
+                value="Add Event"
+            />
             {message}
         </FormWrapper>
     );
