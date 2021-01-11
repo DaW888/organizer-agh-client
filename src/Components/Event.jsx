@@ -9,14 +9,15 @@ import {
 } from '../Styled/Components/Event';
 
 const Event = ({ data }) => {
+    console.log(data);
     return (
         <EventWrapper>
             <TimeWrapper>
-                {format(data.startDate, 'H:mm')} -{' '}
-                {format(data.endDate, 'H:mm')}
+                {format(new Date(data.dateStart), 'H:mm')} -{' '}
+                {format(new Date(data.dateEnd), 'H:mm')}
             </TimeWrapper>
-            <TitleWrapper color={data.color}>{data.name}</TitleWrapper>
-            <TypeWrapper>{data.type}</TypeWrapper>
+            <TitleWrapper color={data.type}>{data.name}</TitleWrapper>
+            <DescriptionWrapper>{data.group.lastNames}</DescriptionWrapper>
             <DescriptionWrapper>{data.description}</DescriptionWrapper>
         </EventWrapper>
     );

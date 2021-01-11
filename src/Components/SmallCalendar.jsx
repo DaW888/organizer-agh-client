@@ -233,9 +233,13 @@ const SmallCalendar = () => {
     const [, actionsStore] = useStore();
 
     const handleCalendar = data => {
-        const from = new Date(data.from.year, data.from.month, data.from.day);
+        const from = new Date(
+            data.from.year,
+            data.from.month - 1,
+            data.from.day
+        );
         const to = data.to
-            ? new Date(data.to.year, data.to.month, data.to.day)
+            ? new Date(data.to.year, data.to.month - 1, data.to.day)
             : null;
 
         if (to) {

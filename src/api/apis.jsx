@@ -48,7 +48,7 @@ export const addEvent = async event => {
     return data;
 };
 
-export const getEvents = async groups => {
-    const { data } = await axios.post(`/api/getEvents`, groups);
+export const getEvents = async groupsAndDate => {
+    const { data } = await axios.post(`/api/getEvents`, groupsAndDate);
     return data;
 };

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { addHours, format } from 'date-fns';
+import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 import Event from './Event';
 import {
     AddWrapper,
@@ -9,21 +9,35 @@ import {
     TitleWrapper,
 } from '../Styled/Components/Column';
 import AddEvent from './AddEvent';
+import * as api from '../api/apis';
+import { useStore } from '../SweetState/store';
 
 const Column = ({ date }) => {
+    console.log(date);
+    const [stateStore] = useStore();
     const [isAddOpen, setIsAddOpen] = useState(false);
+    const [events, setEvents] = useState([]);
 
-    const arrayEvent = [
-        {
-            name: 'Analiza',
-            description: 'Nie wiem co tam będzie',
-            startDate: new Date(2021, 1, 7),
-            endDate: addHours(new Date(2021, 1, 7), 2),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'red',
-        },
-    ];
+    useEffect(() => {
+        (async () => {
+            const groupsArr = Object.values(stateStore.user.groups).map(
+                group => group._id
+            );
+            try {
+                const res = await api.getEvents({
+                    groupsId: groupsArr,
+                    date: date.getTime(),
+                });
+                console.log(res);
+                const eventsArr = res.map(events => {
+                    return events.events;
+                });
+                setEvents(eventsArr.flat());
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
 
     return (
         <ColumnWrapper>
@@ -36,9 +50,8 @@ const Column = ({ date }) => {
                 {isAddOpen && <AddEvent date={date} />}
             </HeaderWrapper>
             <div>
-                {arrayEvent.map((event, i) => (
-                    <Event key={i} data={event} />
-                ))}
+                {events.length > 0 &&
+                    events.map((event, i) => <Event key={i} data={event} />)}
             </div>
         </ColumnWrapper>
     );
