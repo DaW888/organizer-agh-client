@@ -1,69 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import * as api from '../api/apis';
 import { useStore } from '../SweetState/store';
-
-const SettingsWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    color: ${({ theme }) => theme.textSoftColor};
-`;
-
-const SettingsTitleWrapper = styled.h1`
-    color: ${({ theme }) => theme.textColor};
-    text-align: center;
-    margin: 40px 0 40px 0;
-    font-family: Proza Libre, sans-serif;
-    font-weight: 600;
-    font-size: 46px;
-`;
-const SmallTitleWrapper = styled.h3`
-    color: ${({ theme }) => theme.textColor};
-    font-family: Nunito, sans-serif;
-    margin: 0;
-    text-align: center;
-    font-size: 26px;
-`;
-const ProfileInformationWrapper = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-`;
-
-const InputsWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const InputWrapper = styled.input`
-    margin: 4px 0 4px 0;
-`;
-
-const GroupsWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 60vw;
-`;
-
-const GroupWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-const FormWrapper = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-const FormPasswordWrapper = styled.form`
-    display: flex;
-    flex-direction: column;
-`;
+import {
+    FormPasswordWrapper,
+    GroupsWrapper,
+    GroupWrapper,
+    InputsWrapper,
+    ProfileInformationWrapper,
+    SettingsTitleWrapper,
+    SettingsWrapper,
+    SmallTitleWrapper,
+    FormWrapper,
+    InputWrapper,
+    PWrapper,
+    InputButton,
+    SelectWrapper,
+} from '../Styled/Sites/Settings';
 
 const Settings = () => {
     const [stateStore, actionsStore] = useStore();
-
+    console.log(stateStore.user);
     const [groupsUpdatedMessage, setGroupsUpdatedMessage] = useState('');
     const [nestedGroups, setNestedGroups] = useState([]);
     const [selectedGroups, setSelectedGroups] = useState({});
@@ -177,9 +133,9 @@ const Settings = () => {
             <ProfileInformationWrapper>
                 <InputsWrapper>
                     <SmallTitleWrapper>Profile</SmallTitleWrapper>
-                    <p>Michał</p>
-                    <p>Michał</p>
-                    <p>Michał</p>
+                    <PWrapper>{stateStore.user.name}</PWrapper>
+                    <PWrapper>{stateStore.user.surname}</PWrapper>
+                    <PWrapper>{stateStore.user.email}</PWrapper>
                 </InputsWrapper>
                 <FormPasswordWrapper onSubmit={handlePasswordSubmit}>
                     <SmallTitleWrapper>Change Password</SmallTitleWrapper>
@@ -201,7 +157,7 @@ const Settings = () => {
                         type="password"
                         placeholder="Repeat New Password"
                     />
-                    <input type="submit" value="Update" />
+                    <InputButton small type="submit" value="Update" />
                     {passwordUpdateMessage && (
                         <div>{passwordUpdateMessage}</div>
                     )}
@@ -212,7 +168,7 @@ const Settings = () => {
                     {nestedGroups.map((groups, i) => (
                         <GroupWrapper key={i}>
                             <p>{groups[0].name}</p>
-                            <select
+                            <SelectWrapper
                                 name={groups[0].type}
                                 onChange={handleSelectChange}>
                                 {groups.map((group, j) => (
@@ -225,11 +181,11 @@ const Settings = () => {
                                         {group.nr} {group.lastNames}
                                     </option>
                                 ))}
-                            </select>
+                            </SelectWrapper>
                         </GroupWrapper>
                     ))}
                 </GroupsWrapper>
-                <input type="submit" value="update Groups" />
+                <InputButton type="submit" value="Update Groups" />
                 {groupsUpdatedMessage && <div>{groupsUpdatedMessage}</div>}
             </FormWrapper>
         </SettingsWrapper>

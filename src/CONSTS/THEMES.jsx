@@ -43,6 +43,10 @@ export const light = {
             smallButton: '-2px -2px 4px #ffffff, 2px 2px 4px #d5d9e0',
         },
     },
+    settings: {
+        input: 'inset -4px -4px 8px #ffffff, inset 4px 4px 8px #d5d9e0',
+        button: '-4px -4px 8px #ffffff, 4px 4px 8px #d5d9e0',
+    },
 };
 
 export const dark = {
@@ -83,5 +87,9 @@ export const dark = {
                 'inset -2px -2px 4px #3D404B, inset 2px 2px 4px #292C33',
             smallButton: '-2px -2px 4px #3D404B, 2px 2px 4px #292C33',
         },
+    },
+    settings: {
+        input: 'inset -4px -4px 8px #3D404B, inset 4px 4px 8px #292C33',
+        button: '-4px -4px 8px #3D404B, 4px 4px 8px #292C33',
     },
 };
