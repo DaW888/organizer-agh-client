@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { format, compareAsc } from 'date-fns';
+
 import Event from './Event';
 import {
     AddWrapper,
@@ -29,10 +30,13 @@ const Column = ({ date }) => {
                     date: date.getTime(),
                 });
                 console.log(res);
-                const eventsArr = res.map(events => {
-                    return events.events;
-                });
-                setEvents(eventsArr.flat());
+                const eventsArr = res.map(events => events.events);
+                const flatEvents = eventsArr.flat();
+                console.log(flatEvents);
+                flatEvents.sort((a, b) =>
+                    compareAsc(new Date(a.dateStart), new Date(b.dateStart))
+                );
+                setEvents(flatEvents);
             } catch (err) {
                 console.log(err);
             }

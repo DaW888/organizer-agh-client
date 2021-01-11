@@ -43,12 +43,21 @@ export const updateUserPassword = async userData => {
     return data;
 };
 
+export const getEvents = async groupsAndDate => {
+    const { data } = await axios.post(`/api/getEvents`, groupsAndDate);
+    return data;
+};
 export const addEvent = async event => {
     const { data } = await axios.post(`/api/addEvent`, event);
     return data;
 };
 
-export const getEvents = async groupsAndDate => {
-    const { data } = await axios.post(`/api/getEvents`, groupsAndDate);
+export const editEvent = async event => {
+    const { data } = await axios.post(`/api/editEvent`, event);
+    return data;
+};
+
+export const deleteEvent = async groupIdEventId => {
+    const { data } = await axios.post(`/api/deleteEvent`, groupIdEventId);
     return data;
 };

@@ -22,6 +22,7 @@ export const TitleWrapper = styled.h3`
     font-size: 14px;
     color: ${({ theme }) => ({ color }) => theme.eventColors[color]};
     font-weight: 600;
+    cursor: pointer;
 `;
 export const TypeWrapper = styled.div`
     transition: ${({ theme }) => theme.transition};
