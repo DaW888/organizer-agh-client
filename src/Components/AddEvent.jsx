@@ -41,7 +41,7 @@ const TextareaWrapper = styled.textarea`
     }
 `;
 
-const AddEvent = ({ date }) => {
+const AddEvent = ({ date, isEventAdded }) => {
     const [stateStore, actionsStore] = useStore();
 
     const [message, setMessage] = useState('');
@@ -134,6 +134,7 @@ const AddEvent = ({ date }) => {
                 setStartEvent('');
                 setEndEvent('');
                 setDescriptionEvent('');
+                isEventAdded();
             } catch (err) {
                 console.log(err);
                 setMessage(`Can't add Event`);

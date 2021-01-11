@@ -14,11 +14,10 @@ import * as api from '../api/apis';
 import { useStore } from '../SweetState/store';
 
 const Column = ({ date }) => {
-    console.log(date);
     const [stateStore] = useStore();
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [events, setEvents] = useState([]);
-
+    const [isEventEdited, setIsEventEdited] = useState(false);
     useEffect(() => {
         (async () => {
             const groupsArr = Object.values(stateStore.user.groups).map(
@@ -29,19 +28,23 @@ const Column = ({ date }) => {
                     groupsId: groupsArr,
                     date: date.getTime(),
                 });
-                console.log(res);
                 const eventsArr = res.map(events => events.events);
                 const flatEvents = eventsArr.flat();
-                console.log(flatEvents);
                 flatEvents.sort((a, b) =>
                     compareAsc(new Date(a.dateStart), new Date(b.dateStart))
                 );
+                console.log(date);
+                console.log(flatEvents);
                 setEvents(flatEvents);
             } catch (err) {
                 console.log(err);
             }
         })();
-    }, []);
+    }, [isEventEdited]);
+
+    const handleEditEvent = () => {
+        setIsEventEdited(prev => !prev);
+    };
 
     return (
         <ColumnWrapper>
@@ -51,11 +54,19 @@ const Column = ({ date }) => {
                 <AddWrapper onClick={() => setIsAddOpen(prev => !prev)}>
                     {isAddOpen ? '-' : '+'}
                 </AddWrapper>
-                {isAddOpen && <AddEvent date={date} />}
+                {isAddOpen && (
+                    <AddEvent date={date} isEventAdded={handleEditEvent} />
+                )}
             </HeaderWrapper>
             <div>
                 {events.length > 0 &&
-                    events.map((event, i) => <Event key={i} data={event} />)}
+                    events.map((event, i) => (
+                        <Event
+                            key={i}
+                            data={event}
+                            isEventEdited={handleEditEvent}
+                        />
+                    ))}
             </div>
         </ColumnWrapper>
     );

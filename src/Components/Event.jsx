@@ -10,9 +10,7 @@ import {
 import EditEvent from './EditEvent';
 import * as api from '../api/apis';
 
-const Event = ({ data }) => {
-    console.log(data);
-
+const Event = ({ data, isEventEdited }) => {
     const [isEdit, setIsEdit] = useState(false);
     const handleDiscardChanges = () => {
         setIsEdit(false);
@@ -27,6 +25,7 @@ const Event = ({ data }) => {
                 eventId: data._id,
             });
             console.log(res);
+            isEventEdited();
         } catch (err) {
             console.log(err);
         }
@@ -35,6 +34,7 @@ const Event = ({ data }) => {
     const handleEditEvent = () => {
         console.log('edit');
         setIsEdit(false);
+        isEventEdited();
     };
 
     if (isEdit) {
