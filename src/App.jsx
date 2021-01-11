@@ -18,6 +18,8 @@ const App = () => {
     // axios interceptors
     axios.interceptors.request.use(
         req => {
+            console.log(req.url);
+            req.url = 'https://agh-organizer.herokuapp.com' + req.url;
             return req;
         },
         err => {
