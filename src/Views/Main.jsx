@@ -6,7 +6,7 @@ import { useStore } from '../SweetState/store';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import SmallCalendar from '../Components/SmallCalendar';
 import Column from '../Components/Column';
-import { addHours, compareAsc, isSameDay } from 'date-fns';
+// import { addHours, compareAsc, isSameDay } from 'date-fns';
 import {
     CenterWrapper,
     ColumnsWrapper,
@@ -40,56 +40,56 @@ const Main = () => {
         }
     };
 
-    const templateData = [
-        {
-            name: 'Analiza',
-            description: 'Nie wiem co tam będzie',
-            startDate: new Date(2022, 1, 7),
-            endDate: addHours(new Date(2022, 1, 7), 2),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'teal',
-        },
-        {
-            name: 'Metale',
-            description: 'Nie wiem co tam będzie',
-            startDate: new Date(2022, 1, 7),
-            endDate: addHours(new Date(2022, 1, 7), 2),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'teal',
-        },
-        {
-            name: 'Analiza',
-            description: 'Nie wiem co tam będzie',
-            startDate: new Date(2021, 1, 7),
-            endDate: addHours(new Date(2021, 1, 7), 2),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'red',
-        },
-        {
-            name: 'Algebra',
-            description: 'Nie wiem co tam będzie',
-            startDate: new Date(),
-            endDate: addHours(new Date(), 2),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'yellow',
-        },
-        {
-            name: 'Algebra',
-            description: 'Nie wiem co tam będzie',
-            startDate: addHours(new Date(), 2),
-            endDate: addHours(new Date(), 4),
-            type: 'zajęcia',
-            personal: false, // false - group, true - user
-            color: 'teal',
-        },
-    ];
-
-    let iterate = 0;
-    templateData.sort((a, b) => compareAsc(a.startDate, b.startDate));
+    // const templateData = [
+    //     {
+    //         name: 'Analiza',
+    //         description: 'Nie wiem co tam będzie',
+    //         startDate: new Date(2022, 1, 7),
+    //         endDate: addHours(new Date(2022, 1, 7), 2),
+    //         type: 'zajęcia',
+    //         personal: false, // false - group, true - user
+    //         color: 'teal',
+    //     },
+    //     {
+    //         name: 'Metale',
+    //         description: 'Nie wiem co tam będzie',
+    //         startDate: new Date(2022, 1, 7),
+    //         endDate: addHours(new Date(2022, 1, 7), 2),
+    //         type: 'zajęcia',
+    //         personal: false, // false - group, true - user
+    //         color: 'teal',
+    //     },
+    //     {
+    //         name: 'Analiza',
+    //         description: 'Nie wiem co tam będzie',
+    //         startDate: new Date(2021, 1, 7),
+    //         endDate: addHours(new Date(2021, 1, 7), 2),
+    //         type: 'zajęcia',
+    //         personal: false, // false - group, true - user
+    //         color: 'red',
+    //     },
+    //     {
+    //         name: 'Algebra',
+    //         description: 'Nie wiem co tam będzie',
+    //         startDate: new Date(),
+    //         endDate: addHours(new Date(), 2),
+    //         type: 'zajęcia',
+    //         personal: false, // false - group, true - user
+    //         color: 'yellow',
+    //     },
+    //     {
+    //         name: 'Algebra',
+    //         description: 'Nie wiem co tam będzie',
+    //         startDate: addHours(new Date(), 2),
+    //         endDate: addHours(new Date(), 4),
+    //         type: 'zajęcia',
+    //         personal: false, // false - group, true - user
+    //         color: 'teal',
+    //     },
+    // ];
+    //
+    // let iterate = 0;
+    // templateData.sort((a, b) => compareAsc(a.startDate, b.startDate));
     // const columns = templateData.reduce((acc, curEvent) => {
     //     console.log(acc);
     //     if (acc.length > 0) {

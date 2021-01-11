@@ -42,3 +42,13 @@ export const updateUserPassword = async userData => {
     const { data } = await axios.post(`/api/updateUserPassword`, userData);
     return data;
 };
+
+export const addEvent = async event => {
+    const { data } = await axios.post(`/api/addEvent`, event);
+    return data;
+};
+
+export const getEvents = async groups => {
+    const { data } = await axios.post(`/api/getEvents`, groups);
+    return data;
+};

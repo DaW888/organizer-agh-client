@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import * as api from '../../api/apis';
-import { useStore } from '../../SweetState/store';
+import * as api from '../api/apis';
+import { useStore } from '../SweetState/store';
 
 const SettingsWrapper = styled.div`
     display: flex;
