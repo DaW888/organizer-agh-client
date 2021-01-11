@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Calendar } from 'react-modern-calendar-datepicker';
 import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
 import styled from 'styled-components';
+import { useStore } from '../SweetState/store';
 
 const StyledCalendarContainer = styled.div`
     margin: 10px;
 
     .Calendar {
-        transition: ${({ theme }) => theme.transition};
         font-family: Open Sans, sans-serif;
         min-height: 22em;
         max-height: 32em;
@@ -23,7 +23,6 @@ const StyledCalendarContainer = styled.div`
         .Calendar__monthYear.-shown > :hover,
         .Calendar:not(.-noFocusOutline) .Calendar__monthYear.-shown > :focus,
         .Calendar__monthYear > .-activeBackground {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             box-shadow: ${({ theme }) =>
                 theme.main.smallCalendar.boxShadowElement};
@@ -40,19 +39,16 @@ const StyledCalendarContainer = styled.div`
 
         &__monthSelector,
         &__yearSelector {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
         }
 
         &__monthSelectorItem {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             color: ${({ theme }) => theme.textColor};
         }
 
         .Calendar__monthSelectorItemText,
         .Calendar__yearSelectorText {
-            transition: ${({ theme }) => theme.transition};
             color: ${({ theme }) => theme.textColor};
             padding: 6px;
             background: ${({ theme }) => theme.bgMainColor};
@@ -64,7 +60,6 @@ const StyledCalendarContainer = styled.div`
             .Calendar__monthSelectorItemText:not(:disabled):hover,
         .Calendar__yearSelectorItem:not(.-active)
             .Calendar__yearSelectorText:not(:disabled):hover {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             box-shadow: ${({ theme }) =>
                 theme.main.smallCalendar.boxShadowElementHover};
@@ -72,7 +67,6 @@ const StyledCalendarContainer = styled.div`
 
         .Calendar__monthSelectorItem.-active .Calendar__monthSelectorItemText,
         .Calendar__yearSelectorItem.-active .Calendar__yearSelectorText {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             color: ${({ theme }) => theme.accentOrange};
             box-shadow: ${({ theme }) =>
@@ -80,19 +74,16 @@ const StyledCalendarContainer = styled.div`
         }
 
         &__monthSelectorItemText {
-            transition: ${({ theme }) => theme.transition};
             background: ${({ theme }) => theme.bgMainColor};
             color: ${({ theme }) => theme.textColor};
         }
 
         &__monthText,
         &__yearText {
-            transition: ${({ theme }) => theme.transition};
             color: ${({ theme }) => theme.textColor};
         }
 
         &__day {
-            transition: ${({ theme }) => theme.transition};
             min-height: 2.2em;
             background: ${({ theme }) => theme.bgMainColor};
             box-shadow: ${({ theme }) =>
@@ -114,7 +105,6 @@ const StyledCalendarContainer = styled.div`
         .-selectedBetween,
         .-selectedStart,
         .-selectedEnd {
-            transition: ${({ theme }) => theme.transition};
             box-shadow: ${({ theme }) =>
                 theme.main.smallCalendar.boxShadowElementHover};
             color: ${({ theme }) => theme.accentOrange};
@@ -122,7 +112,6 @@ const StyledCalendarContainer = styled.div`
     }
 
     .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
-        transition: ${({ theme }) => theme.transition};
         background: none;
         border: none;
         color: ${({ theme }) => theme.textColor};
@@ -139,36 +128,6 @@ const StyledCalendarContainer = styled.div`
 `;
 
 const SmallCalendar = () => {
-    const [selectedDay, setSelectedDay] = useState({
-        from: null,
-        to: null,
-    });
-
-    const handleCalendar = data => {
-        const from = new Date(data.from.year, data.from.month, data.from.day);
-        const to = data.to
-            ? new Date(data.to.year, data.to.month, data.to.day)
-            : null;
-
-        if (to) {
-            const c = differenceInCalendarDays(from, to);
-            if (c < -5) {
-                console.log('select max 6 days');
-                setSelectedDay({ from: null, to: null });
-                return;
-            } else {
-                setSelectedDay(data);
-                const arrDays = eachDayOfInterval({ start: from, end: to });
-                console.log(arrDays);
-            }
-            console.log(c);
-        }
-        setSelectedDay(data);
-
-        console.log(from, to);
-        console.log(data);
-    };
-
     const myCustomLocale = {
         // months list by order
         months: [
@@ -264,6 +223,39 @@ const SmallCalendar = () => {
 
         // is your language rtl or ltr?
         isRtl: false,
+    };
+
+    const [selectedDay, setSelectedDay] = useState({
+        from: null,
+        to: null,
+    });
+
+    const [, actionsStore] = useStore();
+
+    const handleCalendar = data => {
+        const from = new Date(data.from.year, data.from.month, data.from.day);
+        const to = data.to
+            ? new Date(data.to.year, data.to.month, data.to.day)
+            : null;
+
+        if (to) {
+            const c = differenceInCalendarDays(from, to);
+            if (c < -5) {
+                console.log('select max 6 days');
+                setSelectedDay({ from: null, to: null });
+                return;
+            } else {
+                setSelectedDay(data);
+                const arrDays = eachDayOfInterval({ start: from, end: to });
+                actionsStore.setSelectedDays(arrDays);
+                console.log(arrDays);
+            }
+            console.log(c);
+        }
+        setSelectedDay(data);
+
+        console.log(from, to);
+        console.log(data);
     };
 
     return (
