@@ -20,7 +20,9 @@ const IncomingEvent = ({ data }) => {
                     {format(new Date(data.dateStart), 'H:mm')} -{' '}
                     {format(new Date(data.dateEnd), 'H:mm')}
                 </DateAndTimeWrapper>
-                {formatDistanceToNow(new Date(data.dateStart))}
+                {formatDistanceToNow(new Date(data.dateStart), {
+                    addSuffix: true,
+                })}
             </TimeWrapper>
             <TitleWrapper color={data.type}>{data.name}</TitleWrapper>
             <TypeWrapper>{data.group.lastNames}</TypeWrapper>

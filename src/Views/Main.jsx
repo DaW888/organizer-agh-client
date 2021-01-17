@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import * as api from '../api/apis';
 import { useStore } from '../SweetState/store';
-import { parseISO, formatISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import SmallCalendar from '../Components/SmallCalendar';
