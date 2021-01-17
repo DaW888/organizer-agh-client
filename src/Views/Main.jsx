@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import * as api from '../api/apis';
 import { useStore } from '../SweetState/store';
-import { parseISO } from 'date-fns';
+import { parseISO, formatISO } from 'date-fns';
 
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import SmallCalendar from '../Components/SmallCalendar';
 import Column from '../Components/Column';
-// import { addHours, compareAsc, isSameDay } from 'date-fns';
 import {
     CenterWrapper,
     ColumnsWrapper,
@@ -22,24 +21,12 @@ import { ReactComponent as MoonIcon } from '../assets/icons/moon.svg';
 import { ReactComponent as SunIcon } from '../assets/icons/sun.svg';
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import { useHistory } from 'react-router-dom';
+import IncomingEvents from '../Components/IncomingEvents';
 
 const Main = () => {
     const history = useHistory();
 
     const [stateStore, actionsStore] = useStore();
-    const [foods, setFoods] = useState([]);
-    const [fetchError, setFetchError] = useState(null);
-
-    const getFoods = async () => {
-        try {
-            const data = await api.getFoods();
-            console.log(data);
-            setFoods(data);
-            setFetchError(null);
-        } catch (err) {
-            setFetchError(err.message);
-        }
-    };
 
     // const templateData = [
     //     {
@@ -133,13 +120,7 @@ const Main = () => {
             </CenterWrapper>
             <RightSideWrapper>
                 <SmallCalendar />
-                <button onClick={() => getFoods()}>GET DATAS</button>
-                <ul>
-                    {foods.map((dat, i) => (
-                        <li key={i}>{dat.description}</li>
-                    ))}
-                </ul>
-                <div>{fetchError}</div>
+                <IncomingEvents />
             </RightSideWrapper>
         </MainWrapper>
     );

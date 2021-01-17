@@ -61,3 +61,8 @@ export const deleteEvent = async groupIdEventId => {
     const { data } = await axios.post(`/api/deleteEvent`, groupIdEventId);
     return data;
 };
+
+export const getIncomingEvents = async groupsAndDate => {
+    const { data } = await axios.post(`/api/getIncomingEvents`, groupsAndDate);
+    return data;
+};

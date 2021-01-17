@@ -49,6 +49,9 @@ export const LeftSideWrapper = styled.aside`
     }
 `;
 export const RightSideWrapper = styled.aside`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     position: sticky;
     top: 20px;
     padding: 0;
@@ -56,9 +59,6 @@ export const RightSideWrapper = styled.aside`
     height: 86vh;
 
     @media (max-width: ${({ theme }) => theme.phoneSize}) {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         height: 100%;
         margin: 12px 0 12px 0;
     }
