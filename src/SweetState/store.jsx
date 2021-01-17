@@ -1,5 +1,6 @@
 import { createStore, createHook } from 'react-sweet-state';
 import * as api from '../api/apis';
+import { formatISO } from 'date-fns';
 
 const actions = {
     changeTheme: () => ({ setState, getState }) => {
@@ -51,7 +52,7 @@ const Store = createStore({
     initialState: {
         user: null,
         isLightTheme: !!JSON.parse(localStorage.getItem('isLight')),
-        selectedDays: [new Date()],
+        selectedDays: [formatISO(new Date(), { representation: 'date' })],
     },
     actions,
     name: 'store',

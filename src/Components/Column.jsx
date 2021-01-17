@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { format, compareAsc } from 'date-fns';
+import { format, compareAsc, formatISO } from 'date-fns';
 
 import Event from './Event';
 import {
@@ -26,7 +26,7 @@ const Column = ({ date }) => {
             try {
                 const res = await api.getEvents({
                     groupsId: groupsArr,
-                    date: date.getTime(),
+                    date: formatISO(date),
                 });
                 const eventsArr = res.map(events => events.events);
                 const flatEvents = eventsArr.flat();

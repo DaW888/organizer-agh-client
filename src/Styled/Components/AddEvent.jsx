@@ -40,7 +40,7 @@ export const SmallInputsWrapper = styled.div`
 export const InputHalfWrapper = styled.input`
     padding: 4px;
     width: 48%;
-    font-size: 12px;
+    font-size: 10px;
     background-color: ${({ theme }) => theme.bgMainColor};
     color: ${({ theme }) => theme.textSoftColor};
     box-shadow: ${({ theme }) => theme.main.addEvent.smallInput};

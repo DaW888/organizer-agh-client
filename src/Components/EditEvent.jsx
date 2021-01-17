@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../SweetState/store';
 import { light } from '../CONSTS/THEMES';
-import { compareAsc, format } from 'date-fns';
+import { compareAsc, format, formatISO } from 'date-fns';
 import * as api from '../api/apis';
 import {
     FormWrapper,
@@ -20,11 +20,13 @@ const EditEvent = ({ data, clickDiscard, clickRemove, clickEdit }) => {
 
     const [nameEvent, setNameEvent] = useState(data.name);
     const [startEvent, setStartEvent] = useState(
-        format(new Date(data.dateStart), 'H:mm')
+        format(new Date(data.dateStart), 'HH:mm')
     );
     const [endEvent, setEndEvent] = useState(
-        format(new Date(data.dateEnd), 'H:mm')
+        format(new Date(data.dateEnd), 'HH:mm')
     );
+    console.log(startEvent);
+    console.log(endEvent);
     const [typeEvent, setTypeEvent] = useState(data.type);
     const [groupEvent, setGroupEvent] = useState(data.group);
     const [descriptionEvent, setDescriptionEvent] = useState(data.description);
@@ -77,14 +79,14 @@ const EditEvent = ({ data, clickDiscard, clickRemove, clickEdit }) => {
             return;
         }
         if (compareAsc(dateStart, dateEnd) in [-1, 0]) {
-            setMessage('wrong date');
+            setMessage('wrong date!');
         } else {
             setMessage('');
             const event = {
                 _id: data._id,
                 name: nameEvent,
-                dateStart,
-                dateEnd,
+                dateStart: formatISO(dateStart),
+                dateEnd: formatISO(dateEnd),
                 type: typeEvent,
                 group: groupEvent,
                 description: descriptionEvent,
@@ -159,7 +161,7 @@ const EditEvent = ({ data, clickDiscard, clickRemove, clickEdit }) => {
                 value="Discard Changes"
                 onClick={clickDiscard}
             />
-            {message}
+            <div style={{ color: 'white' }}>{message}</div>
         </FormWrapper>
     );
 };

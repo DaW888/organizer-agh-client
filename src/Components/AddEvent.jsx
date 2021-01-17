@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../SweetState/store';
 import { light } from '../CONSTS/THEMES';
-import { compareAsc } from 'date-fns';
+import { compareAsc, formatISO } from 'date-fns';
 import * as api from '../api/apis';
 import {
     FormWrapper,
@@ -91,8 +91,8 @@ const AddEvent = ({ date, isEventAdded }) => {
             console.log('dobra data');
             const event = {
                 name: nameEvent,
-                dateStart,
-                dateEnd,
+                dateStart: formatISO(dateStart),
+                dateEnd: formatISO(dateEnd),
                 type: typeEvent,
                 group: groupEvent,
                 description: descriptionEvent,

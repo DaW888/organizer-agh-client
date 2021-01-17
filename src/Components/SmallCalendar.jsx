@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Calendar } from 'react-modern-calendar-datepicker';
-import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
+import {
+    differenceInCalendarDays,
+    eachDayOfInterval,
+    formatISO,
+} from 'date-fns';
 import styled from 'styled-components';
 import { useStore } from '../SweetState/store';
 
@@ -251,7 +255,11 @@ const SmallCalendar = () => {
             } else {
                 setSelectedDay(data);
                 const arrDays = eachDayOfInterval({ start: from, end: to });
-                actionsStore.setSelectedDays(arrDays);
+                const arrDaysIso = arrDays.map(day =>
+                    formatISO(day, { representation: 'date' })
+                );
+                console.log(arrDaysIso);
+                actionsStore.setSelectedDays(arrDaysIso);
                 console.log(arrDays);
             }
             console.log(c);
