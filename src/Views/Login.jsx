@@ -16,12 +16,15 @@ import { useStore } from '../SweetState/store';
 
 import projectIllustration from '../assets/illustrations/projectIllustration.svg';
 import ButtonTheme from '../Components/ButtonTheme';
+import { ErrorMessageWrapper } from '../Styled/Global/Errors';
 
 const Login = () => {
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-
+    const [authCode, setAuthCode] = useState('');
+    const [toConfirmedCode, setToConfirmedCode] = useState(false);
+    const [error, setError] = useState('');
     const [, actionsStore] = useStore();
 
     const handleSubmitLogin = async e => {
@@ -33,8 +36,32 @@ const Login = () => {
             history.push('/');
             console.log(res);
         } catch (err) {
+            setError(err.response.data.message);
+            if (err.response.data.message === 'code not confirmed') {
+                setToConfirmedCode(true);
+            }
             actionsStore.logout();
             console.log(err);
+        }
+    };
+
+    const handleConfirmCode = async e => {
+        e.preventDefault();
+        try {
+            const code = parseInt(authCode);
+            const res = await api.checkAuthCode({ code, email });
+            console.log(res);
+            history.push('/');
+        } catch (err) {
+            console.log(err.response.data);
+            setError(err.response.data.message);
+        }
+    };
+
+    const parseCode = code => {
+        const re = /^\d{0,5}$/;
+        if (re.test(code)) {
+            setAuthCode(code);
         }
     };
 
@@ -62,22 +89,39 @@ const Login = () => {
                     src={projectIllustration}
                     alt="projectIllustration"
                 />
-                <FormWrapper onSubmit={handleSubmitLogin}>
-                    <InputText
-                        placeholder="Email"
-                        type="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                    <InputText
-                        placeholder="Password"
-                        type="password"
-                        value={pass}
-                        onChange={e => setPass(e.target.value)}
-                    />
-                    <InputButton type="submit" value="Login" />
-                    <StyledLink to="/register">Register</StyledLink>
-                </FormWrapper>
+
+                {toConfirmedCode ? (
+                    <FormWrapper onSubmit={handleConfirmCode}>
+                        <InputText
+                            center
+                            required
+                            type="text"
+                            value={authCode}
+                            onChange={e => parseCode(e.target.value)}
+                            placeholder="CODE"
+                        />
+                        <ErrorMessageWrapper>{error}</ErrorMessageWrapper>
+                        <InputButton type="submit" value="Confirm Code" />
+                    </FormWrapper>
+                ) : (
+                    <FormWrapper onSubmit={handleSubmitLogin}>
+                        <InputText
+                            placeholder="Email"
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                        <InputText
+                            placeholder="Password"
+                            type="password"
+                            value={pass}
+                            onChange={e => setPass(e.target.value)}
+                        />
+                        <ErrorMessageWrapper>{error}</ErrorMessageWrapper>
+                        <InputButton type="submit" value="Login" />
+                        <StyledLink to="/register">Register</StyledLink>
+                    </FormWrapper>
+                )}
             </Main>
         </LoginContainer>
     );

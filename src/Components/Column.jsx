@@ -20,10 +20,10 @@ const Column = ({ date }) => {
     const [isEventEdited, setIsEventEdited] = useState(false);
     useEffect(() => {
         (async () => {
-            const groupsArr = Object.values(stateStore.user.groups).map(
-                group => group._id
-            );
             try {
+                const groupsArr = Object.values(stateStore.user.groups).map(
+                    group => group._id
+                );
                 const res = await api.getEvents({
                     groupsId: groupsArr,
                     date: formatISO(date),

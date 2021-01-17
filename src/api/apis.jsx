@@ -15,6 +15,11 @@ export const register = async userData => {
     return data;
 };
 
+export const checkAuthCode = async codeAndEmail => {
+    const { data } = await axios.post(`/api/checkAuthCode`, codeAndEmail);
+    return data;
+};
+
 export const validateToken = async () => {
     const { data } = await axios.get('/api/validateToken');
     return data;

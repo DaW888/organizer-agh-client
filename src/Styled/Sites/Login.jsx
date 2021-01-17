@@ -78,7 +78,7 @@ export const Illustration = styled.img`
 
 export const InputText = styled.input`
     transition: ${({ theme }) => theme.transition};
-    font-family: Open Sans, serif;
+    font-family: Open Sans, sans-serif;
     font-weight: 300;
     font-size: 24px;
     background-color: ${({ theme }) => theme.bgMainColor};
@@ -92,6 +92,7 @@ export const InputText = styled.input`
     box-shadow: ${({ theme }) => theme.login.boxShadowInput};
     border-radius: 40px;
     padding: 0 22px 0 22px;
+    text-align: ${({ center }) => (center ? 'center' : 'left')};
 
     @media (max-width: ${({ theme }) => theme.phoneSize}) {
         margin: 0 0 12px 0;
