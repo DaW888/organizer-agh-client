@@ -19,7 +19,6 @@ import {
 
 const Settings = () => {
     const [stateStore, actionsStore] = useStore();
-    console.log(stateStore.user);
     const [groupsUpdatedMessage, setGroupsUpdatedMessage] = useState('');
     const [nestedGroups, setNestedGroups] = useState([]);
     const [selectedGroups, setSelectedGroups] = useState({});
@@ -30,7 +29,6 @@ const Settings = () => {
     const [repNewPassword, setRepNewPassword] = useState('');
 
     const concatGroups = groups => {
-        console.log('elo2');
         let iterate = 0;
         return groups.reduce((acc, curGroup) => {
             if (acc.length > 0) {
@@ -51,7 +49,6 @@ const Settings = () => {
 
     const initSelectedGroups = concatedGroups => {
         concatedGroups.forEach(groups => {
-            console.log('leci');
             const gr = {};
             gr[groups[0].type] = {
                 _id: groups[0]._id,

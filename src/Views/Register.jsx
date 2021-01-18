@@ -63,7 +63,6 @@ const Register = () => {
         (async () => {
             try {
                 const data = await api.validateToken();
-                console.log(data);
                 if (data.message === 'valid') {
                     actionsStore.login(data.user);
                     history.push('/');

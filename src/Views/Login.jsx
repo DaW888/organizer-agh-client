@@ -29,12 +29,10 @@ const Login = () => {
 
     const handleSubmitLogin = async e => {
         e.preventDefault();
-        console.log(email, pass);
         try {
             const res = await api.login({ email, pass });
             actionsStore.login(res.data);
             history.push('/');
-            console.log(res);
         } catch (err) {
             setError(err.response.data.message);
             if (err.response.data.message === 'code not confirmed') {
@@ -53,7 +51,6 @@ const Login = () => {
             console.log(res);
             history.push('/');
         } catch (err) {
-            console.log(err.response.data);
             setError(err.response.data.message);
         }
     };
@@ -69,7 +66,6 @@ const Login = () => {
         (async () => {
             try {
                 const data = await api.validateToken();
-                console.log(data);
                 if (data.message === 'valid') {
                     actionsStore.login(data.user);
                     history.push('/');

@@ -25,8 +25,6 @@ const EditEvent = ({ data, clickDiscard, clickRemove, clickEdit }) => {
     const [endEvent, setEndEvent] = useState(
         format(new Date(data.dateEnd), 'HH:mm')
     );
-    console.log(startEvent);
-    console.log(endEvent);
     const [typeEvent, setTypeEvent] = useState(data.type);
     const [groupEvent, setGroupEvent] = useState(data.group);
     const [descriptionEvent, setDescriptionEvent] = useState(data.description);

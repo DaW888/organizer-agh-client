@@ -60,13 +60,6 @@ const AddEvent = ({ date, isEventAdded }) => {
 
     const handleSubmitEvent = async e => {
         e.preventDefault();
-        console.log(date);
-        console.log(nameEvent);
-        console.log(startEvent);
-        console.log(endEvent);
-        console.log(typeEvent);
-        console.log(groupEvent);
-        console.log(descriptionEvent);
 
         const startTime = startEvent.split(':');
         const endTime = endEvent.split(':');
@@ -88,7 +81,6 @@ const AddEvent = ({ date, isEventAdded }) => {
             setMessage('wrong date');
         } else {
             setMessage('');
-            console.log('dobra data');
             const event = {
                 name: nameEvent,
                 dateStart: formatISO(dateStart),
